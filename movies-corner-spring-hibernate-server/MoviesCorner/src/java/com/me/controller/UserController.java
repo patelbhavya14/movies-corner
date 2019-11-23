@@ -15,6 +15,7 @@ import com.me.response.Message;
 import com.me.validator.UserValidator;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -119,4 +120,36 @@ public class UserController {
         }
     }
     
+    @RequestMapping(value = "/users/followings",
+            method = RequestMethod.GET,
+            produces = "application/json")
+    public ResponseEntity<Object> getFollowings(HttpServletRequest request) throws Exception {
+        try {
+            User user = (User) request.getAttribute("user");
+            System.out.println("followings+="+user);
+            Set<User> followings = userDao.getFollowings(user);
+            
+            return new ResponseEntity<>(followings, HttpStatus.OK);
+        } catch (Exception e) {
+            List<Errors> errors = new ArrayList<Errors>();
+            errors.add(new Errors(e.getMessage()));
+            return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
+        }
+    }
+    
+    @RequestMapping(value = "/users/followers",
+            method = RequestMethod.GET,
+            produces = "application/json")
+    public ResponseEntity<Object> getFollowers(HttpServletRequest request) throws Exception {
+        try {
+            User user = (User) request.getAttribute("user");
+            Set<User> followers = userDao.getFollowers(user);
+            
+            return new ResponseEntity<>(followers, HttpStatus.OK);
+        } catch (Exception e) {
+            List<Errors> errors = new ArrayList<Errors>();
+            errors.add(new Errors(e.getMessage()));
+            return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
+        }
+    }
 }

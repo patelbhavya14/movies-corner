@@ -25,6 +25,8 @@
         <url-pattern>/api/auth/getUserDetails</url-pattern>
         <url-pattern>/api/users/follow/*</url-pattern>
         <url-pattern>/api/users/unfollow/*</url-pattern>
+        <url-pattern>/api/users/followings</url-pattern>
+        <url-pattern>/api/users/followers</url-pattern>
     </filter-mapping>
     <session-config>
         <session-timeout>

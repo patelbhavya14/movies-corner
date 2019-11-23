@@ -1,0 +1,6 @@
+movies-corner-spring-hibernate-server/MoviesCorner/build/
+movies-corner-spring-hibernate-server/MoviesCorner/dist/
+movies-corner-spring-hibernate-server/MoviesCorner/nbproject/private/
+movies-corner-spring-hibernate-server/MoviesCorner/nbproject/private.properties
+movies-corner-react-client/node_modules/
+movies-corner-react-client/yarn.lock

@@ -1,0 +1,123 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package com.me.filter;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.me.config.JwtTokenUtil;
+import com.me.dao.AuthDAO;
+import com.me.exception.UserException;
+import com.me.pojo.User;
+import com.me.response.Errors;
+import io.jsonwebtoken.ExpiredJwtException;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.servlet.Filter;
+import javax.servlet.FilterChain;
+import javax.servlet.FilterConfig;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebFilter;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
+import org.springframework.stereotype.Component;
+import org.springframework.web.context.support.SpringBeanAutowiringSupport;
+import org.springframework.web.filter.OncePerRequestFilter;
+
+/**
+ *
+ * @author bhaVYa
+ */
+@Component
+public class JwtRequestFilter extends OncePerRequestFilter {
+
+    @Autowired
+    @Qualifier("authDao")
+    AuthDAO authDao;
+
+    @Autowired
+    @Qualifier("jwtTokenUtil")
+    JwtTokenUtil jwtTokenUtil;
+
+    public AuthDAO getAuthDao() {
+        return authDao;
+    }
+
+    public void setAuthDao(AuthDAO authDao) {
+        this.authDao = authDao;
+    }
+
+    public JwtTokenUtil getJwtTokenUtil() {
+        return jwtTokenUtil;
+    }
+
+    public void setJwtTokenUtil(JwtTokenUtil jwtTokenUtil) {
+        this.jwtTokenUtil = jwtTokenUtil;
+    }
+
+    @Override
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain fc) throws ServletException, IOException {
+        final String header = request.getHeader("Authorization");
+        
+        String userId = null;
+        String token = null;
+        if (isTokenValid(header)) {
+            token = header.substring(7);
+            try {
+                userId = jwtTokenUtil.getUserIdFromToken(token);
+            } catch (Exception e) {
+                ObjectMapper mapper = new ObjectMapper();
+                String Json = mapper.writeValueAsString(new Errors("Token is not valid"));
+                response.setContentType("application/json");
+                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                response.getWriter().write(Json);
+            } 
+
+        } else {
+            ObjectMapper mapper = new ObjectMapper();
+            String Json = mapper.writeValueAsString(new Errors("Token is not valid"));
+            response.setContentType("application/json");
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            response.getWriter().write(Json);
+        }
+
+        if (userId != null) {
+            try {
+                User user = authDao.getUser(userId);
+
+                if (jwtTokenUtil.validateToken(token, user)) {
+                    request.setAttribute("user", user);
+                } else {
+                    ObjectMapper mapper = new ObjectMapper();
+                    String Json = mapper.writeValueAsString(new Errors("Token is not valid"));
+                    response.setContentType("application/json");
+                    response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+                    response.getWriter().write(Json);
+                }
+            } catch (UserException ex) {
+                ObjectMapper mapper = new ObjectMapper();
+                String Json = mapper.writeValueAsString(new Errors(ex.getMessage()));
+                response.setContentType("application/json");
+                response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+                response.getWriter().write(Json);
+            }
+        }
+
+        fc.doFilter(request, response);
+    }
+
+    boolean isTokenValid(String token) {
+        if (token != null && token.startsWith("Bearer ")) {
+            return true;
+        }
+        return false;
+    }
+
+}

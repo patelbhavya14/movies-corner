@@ -5,12 +5,19 @@
  */
 package com.me.pojo;
 
+import java.util.HashSet;
+import java.util.Set;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -39,6 +46,15 @@ public class User {
     
     @Enumerated(EnumType.STRING)
     private UserRole userRole;
+    
+    @ManyToMany(cascade=CascadeType.ALL)
+    @JoinTable(name="user_followings",
+            joinColumns={@JoinColumn(name="userId")},
+            inverseJoinColumns={@JoinColumn(name="followingId")})
+    private Set<User> followings = new HashSet<>();
+    
+    @ManyToMany(mappedBy="followings", cascade={CascadeType.ALL})
+    private Set<User> followers = new HashSet<>();
     
     public User() {
         
@@ -97,6 +113,22 @@ public class User {
 
     public void setUserRole(UserRole userRole) {
         this.userRole = userRole;
+    }
+
+    public Set<User> getFollowers() {
+        return followers;
+    }
+
+    public void setFollowers(Set<User> followers) {
+        this.followers = followers;
+    }
+
+    public Set<User> getFollowings() {
+        return followings;
+    }
+
+    public void setFollowings(Set<User> followings) {
+        this.followings = followings;
     }
     
     @Override

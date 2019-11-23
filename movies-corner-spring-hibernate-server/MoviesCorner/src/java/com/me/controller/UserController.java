@@ -11,9 +11,11 @@ import com.me.exception.UserException;
 import com.me.pojo.User;
 import com.me.response.Errors;
 import com.me.response.JwtResponse;
+import com.me.response.Message;
 import com.me.validator.UserValidator;
 import java.util.ArrayList;
 import java.util.List;
+import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
@@ -22,6 +24,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -31,7 +34,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author bhaVYa
  */
 @RestController
-@RequestMapping("/api/auth/")
+@RequestMapping("/api")
 public class UserController {
 
     @Autowired
@@ -51,7 +54,7 @@ public class UserController {
         binder.setValidator(validator);
     }
     
-    @RequestMapping(value = "/register",
+    @RequestMapping(value = "/auth/register",
             method = RequestMethod.POST,
             produces = "application/json",
             headers = "content-type=application/x-www-form-urlencoded")
@@ -73,4 +76,47 @@ public class UserController {
             return new ResponseEntity<>(errors,HttpStatus.BAD_REQUEST);
         }
     }
+    
+    @RequestMapping(value = "/users/search/{userName}",
+            method = RequestMethod.GET,
+            produces = "application/json")
+    public ResponseEntity<Object> searchUsers(@PathVariable String userName) throws Exception {
+        List<User> users = userDao.search(userName);
+        return new ResponseEntity<>(users,HttpStatus.OK);
+    }
+    
+    @RequestMapping(value = "/users/follow/{followingId}",
+            method = RequestMethod.GET,
+            produces = "application/json")
+    public ResponseEntity<Object> follow(@PathVariable String followingId, HttpServletRequest request) throws Exception {
+        try {
+            User user = (User) request.getAttribute("user");
+            
+            userDao.follow(user, followingId);
+            
+            return new ResponseEntity<>(new Message("Followed Successfully"), HttpStatus.OK);
+        } catch (Exception e) {
+            List<Errors> errors = new ArrayList<Errors>();
+            errors.add(new Errors(e.getMessage()));
+            return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
+        }
+    }
+    
+    @RequestMapping(value = "/users/unfollow/{unfollowingId}",
+            method = RequestMethod.GET,
+            produces = "application/json")
+    public ResponseEntity<Object> unfollow(@PathVariable String unfollowingId, HttpServletRequest request) throws Exception {
+        try {
+            User user = (User) request.getAttribute("user");
+            
+            userDao.unfollow(user, unfollowingId);
+            
+            return new ResponseEntity<>(new Message("Unfollowed Successfully"), HttpStatus.OK);
+        } catch (Exception e) {
+            List<Errors> errors = new ArrayList<Errors>();
+            errors.add(new Errors(e.getMessage()));
+            return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
+        }
+    }
+    
 }

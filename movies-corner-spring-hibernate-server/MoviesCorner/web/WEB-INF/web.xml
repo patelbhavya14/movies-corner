@@ -23,6 +23,8 @@
     <filter-mapping>
         <filter-name>tokenFilter</filter-name>
         <url-pattern>/api/auth/getUserDetails</url-pattern>
+        <url-pattern>/api/users/follow/*</url-pattern>
+        <url-pattern>/api/users/unfollow/*</url-pattern>
     </filter-mapping>
     <session-config>
         <session-timeout>

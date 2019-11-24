@@ -1,7 +1,14 @@
 import axios from 'axios';
 import { setAlert } from "./alert";
 import setAuthToken  from '../utils/setAuthToken';
-import {AUTH_ERROR, REGISTER_FAIL, REGISTER_SUCCESS, USER_LOADED} from "./types";
+import {
+    AUTH_ERROR,
+    LOGIN_FAIL,
+    LOGIN_SUCCESS, LOGOUT,
+    REGISTER_FAIL,
+    REGISTER_SUCCESS,
+    USER_LOADED
+} from "./types";
 
 // Load User
 export const loadUser = () => async dispatch => {
@@ -19,7 +26,7 @@ export const loadUser = () => async dispatch => {
     } catch(err) {
         dispatch({
             type: AUTH_ERROR
-        })
+        });
     }
 };
 
@@ -53,4 +60,38 @@ export const register = ({ userName, password, firstName, lastName, userRole}) =
             type: REGISTER_FAIL
         });
     }
+};
+
+// Login User
+export const login = (userName, password) => async dispatch => {
+    const config = {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    };
+
+    const body = JSON.stringify({userName, password});
+
+    try {
+        const res = await axios.post('http://localhost:8080/MoviesCorner/api/auth/authenticate', body, config);
+        dispatch({
+            type: LOGIN_SUCCESS,
+            payload: res.data
+        });
+    } catch(err) {
+        const errors = err.response.data.error;
+
+        if(errors) {
+            errors.forEach(error => dispatch(setAlert(error.message, 'danger')));
+        }
+
+        dispatch({
+            type: LOGIN_FAIL
+        });
+    }
+};
+
+// Logout / Clear Profile
+export const logout = () => dispatch => {
+    dispatch({type: LOGOUT});
 };

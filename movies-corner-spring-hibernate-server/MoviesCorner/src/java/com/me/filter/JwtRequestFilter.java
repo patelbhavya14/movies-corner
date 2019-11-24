@@ -57,8 +57,8 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain fc) throws ServletException, IOException {
-        final String header = request.getHeader("Authorization");
-        
+        final String header = request.getHeader("x-auth-token");
+        System.out.println("header="+header);
         String userId = null;
         String token = null;
         if (isTokenValid(header)) {

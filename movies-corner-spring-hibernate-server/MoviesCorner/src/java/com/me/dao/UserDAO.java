@@ -16,7 +16,6 @@ import org.hibernate.Query;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
-import org.hibernate.transform.Transformers;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 /**
@@ -58,7 +57,7 @@ public class UserDAO extends DAO {
             begin();
             System.out.println("get(user.getUserName()=" + get(user.getUserName()));
             if (!get(user.getUserName())) {
-                throw new HibernateException("User Exists");
+                throw new HibernateException("User Already Exists");
             }
             BCryptPasswordEncoder bcrypt = new BCryptPasswordEncoder();
             String bcryptPassword = bcrypt.encode(user.getPassword());

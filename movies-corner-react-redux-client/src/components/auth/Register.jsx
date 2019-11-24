@@ -3,7 +3,6 @@ import { Link, Redirect } from "react-router-dom";
 import { setAlert } from "../../actions/alert";
 import { connect } from "react-redux";
 import { register } from "../../actions/auth";
-import { loadUser } from "../../actions/auth";
 import Alert from "../layout/Alert";
 import PropTypes from 'prop-types';
 
@@ -30,7 +29,7 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
     };
 
     if (isAuthenticated) {
-        return <Redirect to="/" />;
+        return <Redirect to='/'/>
     }
 
     return (
@@ -133,4 +132,4 @@ const mapStateToProps = state => ({
     isAuthenticated: state.auth.isAuthenticated
 });
 
-export default connect(mapStateToProps, {setAlert, register, loadUser})(Register);
+export default connect(mapStateToProps, {setAlert, register})(Register);

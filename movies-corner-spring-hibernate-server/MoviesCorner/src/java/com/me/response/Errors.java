@@ -5,22 +5,24 @@
  */
 package com.me.response;
 
+import java.util.List;
+
 /**
  *
  * @author bhaVYa
  */
 public class Errors {
-    private String error;
+    private List<Message> errors;
     
-    public Errors(String e) {
-        this.error = e;
+    public Errors(List<Message> e) {
+        this.errors = e;
     }
 
-    public String getError() {
-        return error;
+    public List<Message> getError() {
+        return errors;
     }
 
-    public void setError(String error) {
-        this.error = error;
+    public void setError(List<Message> error) {
+        this.errors = error;
     }
 }

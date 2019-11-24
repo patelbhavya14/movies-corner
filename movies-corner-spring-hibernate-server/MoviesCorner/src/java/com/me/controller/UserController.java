@@ -26,6 +26,7 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -34,6 +35,7 @@ import org.springframework.web.bind.annotation.RestController;
  *
  * @author bhaVYa
  */
+
 @RestController
 @RequestMapping("/api")
 public class UserController {
@@ -54,27 +56,26 @@ public class UserController {
     private void initBinder(WebDataBinder binder) {
         binder.setValidator(validator);
     }
-    
+   
     @RequestMapping(value = "/auth/register",
             method = RequestMethod.POST,
-            produces = "application/json",
-            headers = "content-type=application/x-www-form-urlencoded")
-    public ResponseEntity<Object> register(@ModelAttribute("user") User user, BindingResult result) throws Exception{
+            produces = "application/json")
+    public ResponseEntity<Object> register(@RequestBody User user, BindingResult result) throws Exception{
         validator.validate(user, result);
         if (result.hasErrors()) {
-            List<Errors> errors = new ArrayList<Errors>();
+            List<Message> errors = new ArrayList<>();
             result.getFieldErrors().stream()
-                    .forEach(action -> errors.add(new Errors(action.getDefaultMessage())));
-            return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
+                    .forEach(action -> errors.add(new Message(action.getDefaultMessage())));
+            return new ResponseEntity<>(new Errors(errors), HttpStatus.BAD_REQUEST);
         }
         try {
             User u = userDao.register(user);
             final String token = jwtTokenUtil.generateToken(u);
             return new ResponseEntity<>(new JwtResponse(token),HttpStatus.OK);
         } catch(UserException e) {
-            List<Errors> errors = new ArrayList<Errors>();
-            errors.add(new Errors(e.getMessage()));
-            return new ResponseEntity<>(errors,HttpStatus.BAD_REQUEST);
+            List<Message> errors = new ArrayList<>();
+            errors.add(new Message(e.getMessage()));
+            return new ResponseEntity<>(new Errors(errors),HttpStatus.BAD_REQUEST);
         }
     }
     
@@ -97,9 +98,9 @@ public class UserController {
             
             return new ResponseEntity<>(new Message("Followed Successfully"), HttpStatus.OK);
         } catch (Exception e) {
-            List<Errors> errors = new ArrayList<Errors>();
-            errors.add(new Errors(e.getMessage()));
-            return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
+            List<Message> errors = new ArrayList<>();
+            errors.add(new Message(e.getMessage()));
+            return new ResponseEntity<>(new Errors(errors), HttpStatus.BAD_REQUEST);
         }
     }
     
@@ -114,9 +115,9 @@ public class UserController {
             
             return new ResponseEntity<>(new Message("Unfollowed Successfully"), HttpStatus.OK);
         } catch (Exception e) {
-            List<Errors> errors = new ArrayList<Errors>();
-            errors.add(new Errors(e.getMessage()));
-            return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
+            List<Message> errors = new ArrayList<>();
+            errors.add(new Message(e.getMessage()));
+            return new ResponseEntity<>(new Errors(errors), HttpStatus.BAD_REQUEST);
         }
     }
     
@@ -131,9 +132,9 @@ public class UserController {
             
             return new ResponseEntity<>(followings, HttpStatus.OK);
         } catch (Exception e) {
-            List<Errors> errors = new ArrayList<Errors>();
-            errors.add(new Errors(e.getMessage()));
-            return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
+            List<Message> errors = new ArrayList<>();
+            errors.add(new Message(e.getMessage()));
+            return new ResponseEntity<>(new Errors(errors), HttpStatus.BAD_REQUEST);
         }
     }
     
@@ -147,9 +148,9 @@ public class UserController {
             
             return new ResponseEntity<>(followers, HttpStatus.OK);
         } catch (Exception e) {
-            List<Errors> errors = new ArrayList<Errors>();
-            errors.add(new Errors(e.getMessage()));
-            return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
+            List<Message> errors = new ArrayList<>();
+            errors.add(new Message(e.getMessage()));
+            return new ResponseEntity<>(new Errors(errors), HttpStatus.BAD_REQUEST);
         }
     }
 }

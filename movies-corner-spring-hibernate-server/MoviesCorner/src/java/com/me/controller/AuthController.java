@@ -12,6 +12,7 @@ import com.me.exception.UserException;
 import com.me.pojo.User;
 import com.me.response.Errors;
 import com.me.response.JwtResponse;
+import com.me.response.Message;
 import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
@@ -50,9 +51,9 @@ public class AuthController {
             final String token = jwtTokenUtil.generateToken(user);
             return new ResponseEntity<>(new JwtResponse(token), HttpStatus.OK);
         } catch (UserException e) {
-            List<Errors> errors = new ArrayList<Errors>();
-            errors.add(new Errors(e.getMessage()));
-            return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
+            List<Message> errors = new ArrayList<>();
+            errors.add(new Message(e.getMessage()));
+            return new ResponseEntity<>(new Errors(errors), HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -62,9 +63,9 @@ public class AuthController {
             User user = (User) request.getAttribute("user");
             return new ResponseEntity<>(user, HttpStatus.OK);
         } catch (Exception e) {
-            List<Errors> errors = new ArrayList<Errors>();
-            errors.add(new Errors(e.getMessage()));
-            return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
+            List<Message> errors = new ArrayList<>();
+            errors.add(new Message(e.getMessage()));
+            return new ResponseEntity<>(new Errors(errors), HttpStatus.BAD_REQUEST);
         }
     }
 }

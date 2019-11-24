@@ -11,7 +11,10 @@ import com.me.dao.AuthDAO;
 import com.me.exception.UserException;
 import com.me.pojo.User;
 import com.me.response.Errors;
+import com.me.response.Message;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -64,7 +67,9 @@ public class JwtRequestFilter extends OncePerRequestFilter {
                 userId = jwtTokenUtil.getUserIdFromToken(token);
             } catch (Exception e) {
                 ObjectMapper mapper = new ObjectMapper();
-                String Json = mapper.writeValueAsString(new Errors("Token is not valid"));
+                List<Message> errors = new ArrayList<>();
+                errors.add(new Message("Token is not valid"));
+                String Json = mapper.writeValueAsString(new Errors(errors));
                 response.setContentType("application/json");
                 response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
                 response.getWriter().write(Json);
@@ -72,7 +77,9 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 
         } else {
             ObjectMapper mapper = new ObjectMapper();
-            String Json = mapper.writeValueAsString(new Errors("Token is not valid"));
+            List<Message> errors = new ArrayList<>();
+            errors.add(new Message("Token is not valid"));
+            String Json = mapper.writeValueAsString(new Errors(errors));
             response.setContentType("application/json");
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             response.getWriter().write(Json);
@@ -86,14 +93,18 @@ public class JwtRequestFilter extends OncePerRequestFilter {
                     request.setAttribute("user", user);
                 } else {
                     ObjectMapper mapper = new ObjectMapper();
-                    String Json = mapper.writeValueAsString(new Errors("Token is not valid"));
+                    List<Message> errors = new ArrayList<>();
+                    errors.add(new Message("Token is not valid"));
+                    String Json = mapper.writeValueAsString(new Errors(errors));
                     response.setContentType("application/json");
                     response.setStatus(HttpServletResponse.SC_FORBIDDEN);
                     response.getWriter().write(Json);
                 }
             } catch (UserException ex) {
                 ObjectMapper mapper = new ObjectMapper();
-                String Json = mapper.writeValueAsString(new Errors(ex.getMessage()));
+                List<Message> errors = new ArrayList<>();
+                    errors.add(new Message(ex.getMessage()));
+                    String Json = mapper.writeValueAsString(new Errors(errors));
                 response.setContentType("application/json");
                 response.setStatus(HttpServletResponse.SC_FORBIDDEN);
                 response.getWriter().write(Json);

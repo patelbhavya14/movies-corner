@@ -10,8 +10,7 @@ const fontColor = {
 };
 
 const logoStyle = {
-  fontFamily: "'Luckiest Guy', cursive",
-  fontSize: "30px"
+  fontFamily: "'Luckiest Guy', cursive"
 };
 
 const Navigationbar = ({ auth: { isAuthenticated, loading, user }, loadUser, logout }) => {
@@ -22,7 +21,7 @@ const Navigationbar = ({ auth: { isAuthenticated, loading, user }, loadUser, log
       <Fragment>
           <ul className="navbar-nav mr-auto mt-2 mt-lg-0">
                 <Link className="navbar-nav text-decoration-none pr-3" style={fontColor}
-                      to={`/user/${isAuthenticated && user && user.userId}`}>
+                      to={`/profile/${isAuthenticated && user && user.userId}`}>
                   <p className="p-0 m-0 text-center"><i className="fas fa-user"/></p> &nbsp;
                   <p className="mb-0 text-center" >{isAuthenticated && user && user.userName}</p>
                 </Link>
@@ -49,10 +48,10 @@ const Navigationbar = ({ auth: { isAuthenticated, loading, user }, loadUser, log
 
   return (
     <div className="container-fluid bg-dark p-2">
-      <nav className="container navbar bg-dark">
+      <nav className="container navbar bg-dark background-transparent">
         <Link to="/home">
-          <span className="navbar-brand" style={logoStyle}>
-              {/*<img src={logo} alt="logo" height="50px" width="50px" />*/}
+          <span className="navbar-brand p-0" style={logoStyle}>
+              <img src={logo} alt="logo" height="60px" width="60px" />
           </span>
         </Link>
 

@@ -9,6 +9,7 @@ import { Provider } from 'react-redux';
 import Navigationbar from "./components/layout/Navigationbar";
 import Register from "./components/auth/Register";
 import Login from "./components/auth/Login";
+import Profile from "./components/user/Profile";
 
 if(localStorage.token) {
   setAuthToken(localStorage.token);
@@ -27,6 +28,12 @@ function App() {
           <Switch>
             <Route exact path='/register' component={Register}/>
             <Route exact path='/login' component={Login}/>
+            <Route exact path='/profile/:id' component={(e) =>
+                <Profile userId={e.match.params.id} tab="watchList"/>}
+            />
+            <Route exact path='/profile/:id/:tab' component={(e) =>
+                <Profile userId={e.match.params.id} tab={e.match.params.tab}/>}
+            />
           </Switch>
         </Router>
       </div>

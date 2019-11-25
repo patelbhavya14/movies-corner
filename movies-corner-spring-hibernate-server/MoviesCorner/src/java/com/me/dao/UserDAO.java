@@ -131,13 +131,15 @@ public class UserDAO extends DAO {
         }
     }
     
-    public Set<User> getFollowings(User user) throws UserException {
+    public Set<User> getFollowings(String userId) throws UserException {
+        User user = getUserFromId(userId);
         Set<User> followings = user.getFollowings();
         System.out.println("followings+="+followings);
         return followings;
     }
     
-    public Set<User> getFollowers(User user) throws UserException {
+    public Set<User> getFollowers(String userId) throws UserException {
+        User user = getUserFromId(userId);
         Set<User> followers = user.getFollowers();
         return followers;
     }

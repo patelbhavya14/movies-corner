@@ -79,6 +79,21 @@ public class UserController {
         }
     }
     
+    @RequestMapping(value = "/users/{userId}",
+            method = RequestMethod.GET,
+            produces = "application/json")
+    public ResponseEntity<Object> getUser(@PathVariable String userId) throws Exception {
+        try {
+            User user = userDao.getUserFromId(userId);
+            return new ResponseEntity<>(user,HttpStatus.OK);
+        } catch(Exception e) {
+            List<Message> errors = new ArrayList<>();
+            errors.add(new Message(e.getMessage()));
+            return new ResponseEntity<>(new Errors(errors), HttpStatus.BAD_REQUEST);
+        }
+        
+    }
+    
     @RequestMapping(value = "/users/search/{userName}",
             method = RequestMethod.GET,
             produces = "application/json")
@@ -121,14 +136,12 @@ public class UserController {
         }
     }
     
-    @RequestMapping(value = "/users/followings",
+    @RequestMapping(value = "/users/followings/{id}",
             method = RequestMethod.GET,
             produces = "application/json")
-    public ResponseEntity<Object> getFollowings(HttpServletRequest request) throws Exception {
+    public ResponseEntity<Object> getFollowings(@PathVariable String id) throws Exception {
         try {
-            User user = (User) request.getAttribute("user");
-            System.out.println("followings+="+user);
-            Set<User> followings = userDao.getFollowings(user);
+            Set<User> followings = userDao.getFollowings(id);
             
             return new ResponseEntity<>(followings, HttpStatus.OK);
         } catch (Exception e) {
@@ -138,13 +151,12 @@ public class UserController {
         }
     }
     
-    @RequestMapping(value = "/users/followers",
+    @RequestMapping(value = "/users/followers/{id}",
             method = RequestMethod.GET,
             produces = "application/json")
-    public ResponseEntity<Object> getFollowers(HttpServletRequest request) throws Exception {
+    public ResponseEntity<Object> getFollowers(@PathVariable String id) throws Exception {
         try {
-            User user = (User) request.getAttribute("user");
-            Set<User> followers = userDao.getFollowers(user);
+            Set<User> followers = userDao.getFollowers(id);
             
             return new ResponseEntity<>(followers, HttpStatus.OK);
         } catch (Exception e) {

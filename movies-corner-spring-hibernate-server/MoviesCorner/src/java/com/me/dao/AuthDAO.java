@@ -9,8 +9,12 @@ import static com.me.dao.DAO.getSession;
 import com.me.exception.UserException;
 import com.me.pojo.User;
 import java.util.List;
+import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
+import org.hibernate.criterion.MatchMode;
+import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 /**

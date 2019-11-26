@@ -1,10 +1,10 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from "react-redux";
 import {getFollowers} from "../../actions/profile";
 import UserCard from "./UserCard";
 
-const Followers = ({userId, getFollowers, profile:{followers}}) => {
+const Followers = ({userId, getFollowers, profile:{followers}, auth}) => {
     useEffect(() => {
         getFollowers(userId);
     }, [userId]);

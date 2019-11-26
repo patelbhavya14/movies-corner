@@ -5,7 +5,9 @@
  */
 package com.me.pojo;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.CascadeType;
@@ -38,6 +40,7 @@ public class User {
     @Column(name="userName")
     private String userName;
     
+    @JsonProperty( value = "password", access = JsonProperty.Access.WRITE_ONLY)
     @Column(name="password")
     private String password;
     

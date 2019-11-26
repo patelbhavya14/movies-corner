@@ -5,8 +5,6 @@ import ProfileActivities from "./ProfileActivities";
 import {connect} from "react-redux";
 
 const Profile = ({userId, tab}) => {
-    const[user, setUser] = useState("");
-
     return (
         <div className="container">
             <div className="row mt-3">

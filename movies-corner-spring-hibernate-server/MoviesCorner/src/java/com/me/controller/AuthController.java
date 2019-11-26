@@ -7,7 +7,6 @@ package com.me.controller;
 
 import com.me.config.JwtTokenUtil;
 import com.me.dao.AuthDAO;
-import com.me.dao.UserDAO;
 import com.me.exception.UserException;
 import com.me.pojo.User;
 import com.me.response.Errors;
@@ -20,8 +19,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -62,6 +59,7 @@ public class AuthController {
     public ResponseEntity<Object> getUserDetails(HttpServletRequest request) throws Exception {
         try {
             User user = (User) request.getAttribute("user");
+            
             return new ResponseEntity<>(user, HttpStatus.OK);
         } catch (Exception e) {
             List<Message> errors = new ArrayList<>();

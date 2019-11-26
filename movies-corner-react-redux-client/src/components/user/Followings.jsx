@@ -26,7 +26,8 @@ Followings.propTypes = {
 };
 
 const mapStateToProps = state => ({
-    profile: state.profile
+    profile: state.profile,
+    auth: state.auth
 });
 
 export default connect(mapStateToProps, {getFollowings})(Followings);

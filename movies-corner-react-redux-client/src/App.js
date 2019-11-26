@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import './App.css';
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 
 import store from './store';
 import {loadUser} from "./actions/auth";
@@ -20,12 +20,14 @@ function App() {
     store.dispatch(loadUser());
   }, []);
 
+  // const history = syncHistoryWithStore(useHistory, store);
+
   return (
     <Provider store={store}>
       <div className="background-image min-vh-100 text-light">
         <Router>
           <Navigationbar />
-          <Switch>
+          {/*<Switch>*/}
             <Route exact path='/register' component={Register}/>
             <Route exact path='/login' component={Login}/>
             <Route exact path='/profile/:id' component={(e) =>
@@ -34,7 +36,7 @@ function App() {
             <Route exact path='/profile/:id/:tab' component={(e) =>
                 <Profile userId={e.match.params.id} tab={e.match.params.tab}/>}
             />
-          </Switch>
+          {/*</Switch>*/}
         </Router>
       </div>
     </Provider>

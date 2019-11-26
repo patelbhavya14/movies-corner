@@ -1,21 +1,22 @@
 import React, {useEffect} from 'react';
-import logo from '../../images/logo.png'
+import profile from '../../images/profile.png'
 import PropTypes from 'prop-types';
 import {connect} from "react-redux";
 import {getProfileInformation} from "../../actions/profile";
+import FollowButton from "./FollowButton";
 
 const ProfileInformation = ({userId, profile:{user, loadingUser}, getProfileInformation, authId}) => {
     useEffect(() => {
-        console.log("everytime");
         getProfileInformation(userId);
     },[userId]);
 
     return (
         <div>
-            {!loadingUser? (
+            {
+                !loadingUser? (
                 <div className="text-center">
                     <p>
-                        <img src={logo} alt="image" height={200} width={200}/>
+                        <img src={profile} alt="image" height={200} width={200}/>
                     </p>
                     <p className="h1">
                         {user.firstName} {user.lastName}
@@ -28,9 +29,9 @@ const ProfileInformation = ({userId, profile:{user, loadingUser}, getProfileInfo
                     </p>
                     {
                         authId.user && Number(authId.user.userId) !== Number(userId)?
-                        (<button className="btn btn-success btn-outline-light w-100">
-                            <i className="fas fa-user-plus" />&nbsp;Follow
-                        </button>):
+                        (
+                            <FollowButton isFollowing={user.isFollowing} userId={userId}/>
+                        ):
                         (<p></p>)
                     }
                 </div>

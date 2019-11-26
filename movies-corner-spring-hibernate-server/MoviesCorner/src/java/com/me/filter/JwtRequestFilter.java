@@ -58,7 +58,6 @@ public class JwtRequestFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain fc) throws ServletException, IOException {
         final String header = request.getHeader("x-auth-token");
-        System.out.println("header="+header);
         String userId = null;
         String token = null;
         if (isTokenValid(header)) {
@@ -73,6 +72,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
                 response.setContentType("application/json");
                 response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
                 response.getWriter().write(Json);
+                response.getWriter().close();
             } 
 
         } else {
@@ -83,6 +83,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
             response.setContentType("application/json");
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             response.getWriter().write(Json);
+            response.getWriter().close();
         }
 
         if (userId != null) {
@@ -99,6 +100,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
                     response.setContentType("application/json");
                     response.setStatus(HttpServletResponse.SC_FORBIDDEN);
                     response.getWriter().write(Json);
+                    response.getWriter().close();
                 }
             } catch (UserException ex) {
                 ObjectMapper mapper = new ObjectMapper();
@@ -108,6 +110,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
                 response.setContentType("application/json");
                 response.setStatus(HttpServletResponse.SC_FORBIDDEN);
                 response.getWriter().write(Json);
+                response.getWriter().close();
             }
         }
 

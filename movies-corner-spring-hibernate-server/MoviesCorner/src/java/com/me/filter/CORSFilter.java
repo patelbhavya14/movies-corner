@@ -40,7 +40,6 @@ public class CORSFilter implements Filter {
         hrs.setHeader("Access-Control-Allow-Credentials", "false");
         hrs.setHeader("Access-Control-Max-Age", "4800");
         
-        System.out.println("here in cors");
         chain.doFilter(request, response);
     }
 

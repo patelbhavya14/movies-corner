@@ -54,7 +54,7 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
                                 </div>
                                 <div className="form-group">
                                     <input
-                                        type="text"
+                                        type="password"
                                         className="form-control"
                                         name="password"
                                         value={password}
@@ -64,7 +64,7 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
                                 </div>
                                 <div className="form-group">
                                     <input
-                                        type="text"
+                                        type="password"
                                         className="form-control"
                                         name="password2"
                                         value={password2}

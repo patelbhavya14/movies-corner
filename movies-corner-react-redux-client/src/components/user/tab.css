@@ -1,4 +1,5 @@
-.nav-link:hover {
+.link:hover {
+    text-decoration: none;
     border-bottom: 3px solid #fff;
 }
 
@@ -9,4 +10,8 @@
 .nav-link {
     padding-left: 0px;
     padding-right: 0px;
+}
+
+.card-link {
+    text-decoration: none;
 }

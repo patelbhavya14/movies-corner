@@ -43,12 +43,13 @@ public class AuthController {
     @RequestMapping(value = "/authenticate", method = RequestMethod.POST)
     public ResponseEntity<Object> createAuthenticationToken(@RequestBody User u) throws Exception {
         try {
+            System.out.println("error System.out.println(\"here benchod\");");
             User user = authDao.authenticate(u.getUserName(),
                     u.getPassword());
             final String token = jwtTokenUtil.generateToken(user);
             return new ResponseEntity<>(new JwtResponse(token), HttpStatus.OK);
         } catch (UserException e) {
-            System.out.println(e.getMessage());
+            System.out.println("BHOSDO"+e.getMessage());
             List<Message> errors = new ArrayList<>();
             errors.add(new Message(e.getMessage()));
             return new ResponseEntity<>(new Errors(errors), HttpStatus.BAD_REQUEST);

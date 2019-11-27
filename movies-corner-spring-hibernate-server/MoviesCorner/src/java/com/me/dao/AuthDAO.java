@@ -48,19 +48,12 @@ public class AuthDAO extends DAO{
     public User getUser(String userId) throws UserException{
         try {
             begin();
-            
-            Query q = getSession().createQuery("from User where userId=:userId");
-            q.setInteger("userId", Integer.parseInt(userId));
-            
-            List<User> list = q.list();
-            if(list.isEmpty()) {
-                throw new HibernateException("User does not exists");
-            }
+            User user = getSession().get(User.class, Integer.parseInt(userId));
             commit();
-            return list.get(0);
+            return user;
         } catch (HibernateException e) {
             rollback();
-            throw new UserException(e.getMessage());
+            throw new UserException("User does not exist");
         }
     }
 }

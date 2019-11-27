@@ -95,9 +95,9 @@ public class UserController {
                 String token = headers.get("x-auth-token").get(0);
                 requestingUser += jwtTokenUtil.getUserIdFromToken(token.substring(7));
             }
-            
-            User user = userDao.getUserFromId(userId);
-
+            System.out.println("REQUESTING USERID="+requestingUser);
+            User user = userDao.getUser(userId);
+            System.out.println("SUBJECT USER="+user);
             JSONObject userJson = new JSONObject();
             userJson.put("userId", user.getUserId());
             userJson.put("userName", user.getUserName());
@@ -106,8 +106,8 @@ public class UserController {
             userJson.put("userRole", user.getUserRole());
             
             if (!requestingUser.equals("guest")) {
-                User reqUser = userDao.getUserFromId(requestingUser);
-
+                User reqUser = userDao.getUser(requestingUser);
+                System.out.println("REQUESTING USER="+reqUser);
                 if (reqUser.getFollowings().contains(user)) {
                     userJson.put("isFollowing", true);
                 } else {
@@ -139,7 +139,7 @@ public class UserController {
     public ResponseEntity<Object> follow(@PathVariable String followingId, HttpServletRequest request) throws Exception {
         try {
             User user = (User) request.getAttribute("user");
-
+            System.out.println("user in token="+user);
             userDao.follow(user, followingId);
 
             return new ResponseEntity<>(new Message("Followed Successfully"), HttpStatus.OK);
@@ -184,7 +184,7 @@ public class UserController {
             
             User reqUser = null;
             if (!requestingUser.equals("guest")) {
-                reqUser = userDao.getUserFromId(requestingUser);
+                reqUser = userDao.getUser(requestingUser);
             }
             
             
@@ -234,7 +234,7 @@ public class UserController {
             
             User reqUser = null;
             if (!requestingUser.equals("guest")) {
-                reqUser = userDao.getUserFromId(requestingUser);
+                reqUser = userDao.getUser(requestingUser);
             }
             
             

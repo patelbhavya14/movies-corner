@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/movies-corner-react-client.iml" filepath="$PROJECT_DIR$/.idea/movies-corner-react-client.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/movies-corner-react-redux-client.iml" filepath="$PROJECT_DIR$/.idea/movies-corner-react-redux-client.iml" />
     </modules>
   </component>
 </project>

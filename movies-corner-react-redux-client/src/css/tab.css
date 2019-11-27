@@ -12,6 +12,6 @@
     padding-right: 0px;
 }
 
-.card-link {
+.card-link:hover {
     text-decoration: none;
 }

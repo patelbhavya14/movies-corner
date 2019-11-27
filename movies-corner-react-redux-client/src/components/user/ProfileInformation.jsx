@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 import {connect} from "react-redux";
 import {getProfileInformation} from "../../actions/profile";
 import FollowButton from "./FollowButton";
+import ReactLoading from "react-loading";
+import Avatar from "react-avatar";
 
 const ProfileInformation = ({userId, profile:{user, loadingUser}, getProfileInformation, authId}) => {
     useEffect(() => {
@@ -16,7 +18,7 @@ const ProfileInformation = ({userId, profile:{user, loadingUser}, getProfileInfo
                 !loadingUser? (
                 <div className="text-center">
                     <p>
-                        <img src={profile} alt="image" height={200} width={200}/>
+                        <Avatar name={`${user.firstName} ${user.lastName}`} size="200" round={true}/>
                     </p>
                     <p className="h1">
                         {user.firstName} {user.lastName}
@@ -35,7 +37,7 @@ const ProfileInformation = ({userId, profile:{user, loadingUser}, getProfileInfo
                         (<p></p>)
                     }
                 </div>
-                ) :(<p>loading</p>)
+                ) :(<ReactLoading type='bars'/>)
             }
         </div>
     );

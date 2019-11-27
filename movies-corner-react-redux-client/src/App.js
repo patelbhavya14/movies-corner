@@ -10,6 +10,8 @@ import Navigationbar from "./components/layout/Navigationbar";
 import Register from "./components/auth/Register";
 import Login from "./components/auth/Login";
 import Profile from "./components/user/Profile";
+import HomePage from "./components/layout/HomePage";
+import SearchUsers from "./components/search/SearchUsers";
 
 if(localStorage.token) {
   setAuthToken(localStorage.token);
@@ -28,6 +30,7 @@ function App() {
         <Router>
           <Navigationbar />
           {/*<Switch>*/}
+            <Route exact path='/home' component={HomePage}/>
             <Route exact path='/register' component={Register}/>
             <Route exact path='/login' component={Login}/>
             <Route exact path='/profile/:id' component={(e) =>
@@ -35,6 +38,9 @@ function App() {
             />
             <Route exact path='/profile/:id/:tab' component={(e) =>
                 <Profile userId={e.match.params.id} tab={e.match.params.tab}/>}
+            />
+            <Route exact path='/search/user/:userName'
+                   component={(e) => <SearchUsers userName={e.match.params.userName}/>}
             />
           {/*</Switch>*/}
         </Router>

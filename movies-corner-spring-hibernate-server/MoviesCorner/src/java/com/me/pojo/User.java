@@ -5,7 +5,7 @@
  */
 package com.me.pojo;
 
-import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.HashSet;
@@ -21,9 +21,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 /**
  *
@@ -54,14 +52,14 @@ public class User {
     private UserRole userRole;
     
     @JsonIgnore
-    @ManyToMany(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
+    @ManyToMany(cascade=CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(name="user_followings",
-            joinColumns={@JoinColumn(name="userId")},
-            inverseJoinColumns={@JoinColumn(name="followingId")})
+            joinColumns=@JoinColumn(name="userId"),
+            inverseJoinColumns=@JoinColumn(name="followingId"))
     private Set<User> followings = new HashSet<>();
     
     @JsonIgnore
-    @ManyToMany(fetch = FetchType.LAZY, mappedBy="followings", cascade={CascadeType.ALL})
+    @ManyToMany(cascade=CascadeType.ALL, fetch = FetchType.EAGER, mappedBy="followings")
     private Set<User> followers = new HashSet<>();
     
     public User() {

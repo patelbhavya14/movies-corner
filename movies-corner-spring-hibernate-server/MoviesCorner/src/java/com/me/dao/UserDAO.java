@@ -36,33 +36,40 @@ public class UserDAO extends DAO {
         }
     }
 
+    // Get user from UserDAO
     public User getUserFromId(String userId) throws UserException {
         try {
-            Query q = getSession().createQuery("from User where userId=:userId");
-            q.setInteger("userId", Integer.parseInt(userId));
-            
-            List<User> list = q.list();
-            if(list.isEmpty()) {
-                throw new HibernateException("User does not exists");
-            }
-            return list.get(0);
+            User user = getSession().get(User.class, Integer.parseInt(userId));
+            return user;
         } catch (HibernateException e) {
             rollback();
-            throw new UserException(e.getMessage());
+            throw new UserException("User does not exist");
+        }
+    }
+
+    // Get user from UserController
+    public User getUser(String userId) throws UserException{
+        try {
+            begin();
+            User user = getSession().get(User.class, Integer.parseInt(userId));
+            commit();
+            return user;
+        } catch (HibernateException e) {
+            rollback();
+            throw new UserException("User does not exist");
         }
     }
     
     public User register(User user) throws UserException {
         try {
             begin();
-            System.out.println("get(user.getUserName()=" + get(user.getUserName()));
             if (!get(user.getUserName())) {
                 throw new HibernateException("User Already Exists");
             }
             BCryptPasswordEncoder bcrypt = new BCryptPasswordEncoder();
             String bcryptPassword = bcrypt.encode(user.getPassword());
             user.setPassword(bcryptPassword);
-            
+
             getSession().save(user);
             commit();
             return user;
@@ -71,22 +78,22 @@ public class UserDAO extends DAO {
             throw new UserException(e.getMessage());
         }
     }
-    
+
     public List<User> search(String userName) throws UserException {
         try {
             begin();
-            
+
             Criteria criteria = getSession().createCriteria(User.class);
             criteria.add(Restrictions.like("userName", userName, MatchMode.START));
             criteria.setProjection(Projections.projectionList()
-                .add(Projections.property("userId").as("userId"))
-                .add(Projections.property("userName").as("userName"))
-                .add(Projections.property("firstName").as("firstName"))
-                .add(Projections.property("lastName").as("lastName"))
-                .add(Projections.property("userRole").as("userRole")));
+                    .add(Projections.property("userId").as("userId"))
+                    .add(Projections.property("userName").as("userName"))
+                    .add(Projections.property("firstName").as("firstName"))
+                    .add(Projections.property("lastName").as("lastName"))
+                    .add(Projections.property("userRole").as("userRole")));
             criteria.setResultTransformer(Criteria.ALIAS_TO_ENTITY_MAP);
             List<User> list = criteria.list();
-            
+
             commit();
             return list;
         } catch (HibernateException e) {
@@ -94,52 +101,75 @@ public class UserDAO extends DAO {
             throw new UserException(e.getMessage());
         }
     }
-    
+
     public void follow(User user, String followingId) throws UserException {
         try {
             begin();
-            
+
             User followingUser = getUserFromId(followingId);
-            if(followingUser == user)
+            if (followingUser == user) {
                 throw new HibernateException("Same User");
+            }
             Set<User> followings = user.getFollowings();
             followings.add(followingUser);
-            
             getSession().save(user);
             commit();
+            System.out.println("commited follow");
         } catch (HibernateException e) {
             rollback();
             throw new UserException(e.getMessage());
         }
     }
-    
+
     public void unfollow(User user, String unfollowingId) throws UserException {
         try {
             begin();
-            
+
             User unfollowingUser = getUserFromId(unfollowingId);
-            if(unfollowingUser == user)
+            if (unfollowingUser == user) {
                 throw new HibernateException("Same User");
+            }
             Set<User> followings = user.getFollowings();
             followings.remove(unfollowingUser);
-            
+
             getSession().save(user);
             commit();
+            System.out.println("commited unfollow");
         } catch (HibernateException e) {
             rollback();
             throw new UserException(e.getMessage());
         }
     }
-    
+
     public Set<User> getFollowings(String userId) throws UserException {
-        User user = getUserFromId(userId);
-        Set<User> followings = user.getFollowings();
-        return followings;
+        try {
+            begin();
+            User user = getUserFromId(userId);
+            Set<User> followings = user.getFollowings();
+            System.out.println("LIST=" + followings);
+            getSession().save(user);
+            commit();
+            System.out.println("commited unfollow");
+            return followings;
+        } catch (HibernateException e) {
+            rollback();
+            throw new UserException(e.getMessage());
+        }
     }
-    
+
     public Set<User> getFollowers(String userId) throws UserException {
-        User user = getUserFromId(userId);
-        Set<User> followers = user.getFollowers();
-        return followers;
+        try {
+            begin();
+            User user = getUserFromId(userId);
+            Set<User> followers = user.getFollowers();
+            System.out.println("LIST FOLLOWERS=" + followers);
+            getSession().save(user);
+            commit();
+            System.out.println("commited unfollow");
+            return followers;
+        } catch (HibernateException e) {
+            rollback();
+            throw new UserException(e.getMessage());
+        }
     }
 }

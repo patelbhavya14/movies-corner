@@ -4,17 +4,22 @@ import ProfileInformation from "./ProfileInformation";
 import ProfileActivities from "./ProfileActivities";
 import {connect} from "react-redux";
 
-const Profile = ({userId, tab}) => {
+const Profile = ({userId, tab, auth, profile}) => {
     return (
         <div className="container">
-            <div className="row mt-3">
-                <div className="col-md-2">
-                    <ProfileInformation userId={userId}/>
-                </div>
-                <div className="col-md-10">
-                    <ProfileActivities userId={userId} tab={tab}/>
-                </div>
-            </div>
+            {
+                auth.loading === false && (
+                    <div className="row mt-3">
+                        <div className="col-md-2">
+                            <ProfileInformation userId={userId}/>
+                        </div>
+                        <div className="col-md-10">
+                            <ProfileActivities userId={userId} tab={tab}/>
+                        </div>
+                    </div>
+                )
+            }
+
         </div>
     );
 };
@@ -25,7 +30,8 @@ Profile.propTypes = {
 };
 
 const mapStateToProps = state => ({
-    authId: state.auth
+    auth: state.auth,
+    profile: state.profile
 });
 
 export default connect(mapStateToProps)(Profile);

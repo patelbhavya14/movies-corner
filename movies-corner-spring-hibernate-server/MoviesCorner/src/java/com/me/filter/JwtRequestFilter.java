@@ -31,12 +31,8 @@ import org.springframework.web.filter.OncePerRequestFilter;
 @Component
 public class JwtRequestFilter extends OncePerRequestFilter {
 
-    @Autowired
-    @Qualifier("authDao")
     AuthDAO authDao;
 
-    @Autowired
-    @Qualifier("jwtTokenUtil")
     JwtTokenUtil jwtTokenUtil;
 
     public AuthDAO getAuthDao() {
@@ -65,25 +61,11 @@ public class JwtRequestFilter extends OncePerRequestFilter {
             try {
                 userId = jwtTokenUtil.getUserIdFromToken(token);
             } catch (Exception e) {
-                ObjectMapper mapper = new ObjectMapper();
-                List<Message> errors = new ArrayList<>();
-                errors.add(new Message("Token is not valid"));
-                String Json = mapper.writeValueAsString(new Errors(errors));
-                response.setContentType("application/json");
-                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-                response.getWriter().write(Json);
-                response.getWriter().close();
-            } 
+                displayError(response);
+            }
 
         } else {
-            ObjectMapper mapper = new ObjectMapper();
-            List<Message> errors = new ArrayList<>();
-            errors.add(new Message("Token is not valid"));
-            String Json = mapper.writeValueAsString(new Errors(errors));
-            response.setContentType("application/json");
-            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-            response.getWriter().write(Json);
-            response.getWriter().close();
+            displayError(response);
         }
 
         if (userId != null) {
@@ -93,24 +75,10 @@ public class JwtRequestFilter extends OncePerRequestFilter {
                 if (jwtTokenUtil.validateToken(token, user)) {
                     request.setAttribute("user", user);
                 } else {
-                    ObjectMapper mapper = new ObjectMapper();
-                    List<Message> errors = new ArrayList<>();
-                    errors.add(new Message("Token is not valid"));
-                    String Json = mapper.writeValueAsString(new Errors(errors));
-                    response.setContentType("application/json");
-                    response.setStatus(HttpServletResponse.SC_FORBIDDEN);
-                    response.getWriter().write(Json);
-                    response.getWriter().close();
+                    displayError(response);
                 }
             } catch (UserException ex) {
-                ObjectMapper mapper = new ObjectMapper();
-                List<Message> errors = new ArrayList<>();
-                    errors.add(new Message(ex.getMessage()));
-                    String Json = mapper.writeValueAsString(new Errors(errors));
-                response.setContentType("application/json");
-                response.setStatus(HttpServletResponse.SC_FORBIDDEN);
-                response.getWriter().write(Json);
-                response.getWriter().close();
+                displayError(response);
             }
         }
 
@@ -124,4 +92,14 @@ public class JwtRequestFilter extends OncePerRequestFilter {
         return false;
     }
 
+    void displayError(HttpServletResponse response) throws IOException {
+        ObjectMapper mapper = new ObjectMapper();
+        List<Message> errors = new ArrayList<>();
+        errors.add(new Message("Token is not valid"));
+        String Json = mapper.writeValueAsString(new Errors(errors));
+        response.setContentType("application/json");
+        response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+        response.getWriter().write(Json);
+        response.getWriter().close();
+    }
 }

@@ -1,8 +1,7 @@
 import React from 'react';
-import logo from '../../images/logo.png'
 import PropTypes from 'prop-types';
 import {Link} from "react-router-dom";
-import './tab.css'
+import '../../css/tab.css';
 
 const UserCard = ({user, type}) => {
     return (

@@ -149,7 +149,6 @@ public class UserDAO extends DAO {
             System.out.println("LIST=" + followings);
             getSession().save(user);
             commit();
-            System.out.println("commited unfollow");
             return followings;
         } catch (HibernateException e) {
             rollback();

@@ -12,6 +12,7 @@ import Login from "./components/auth/Login";
 import Profile from "./components/user/Profile";
 import HomePage from "./components/layout/HomePage";
 import SearchUsers from "./components/search/SearchUsers";
+import SearchMovies from "./components/search/SearchMovies";
 
 if(localStorage.token) {
   setAuthToken(localStorage.token);
@@ -38,6 +39,9 @@ function App() {
             />
             <Route exact path='/profile/:id/:tab' component={(e) =>
                 <Profile userId={e.match.params.id} tab={e.match.params.tab}/>}
+            />
+            <Route exact path='/search/movie/:query'
+                   component={(e) => <SearchMovies query={e.match.params.query}/>}
             />
             <Route exact path='/search/user/:userName'
                    component={(e) => <SearchUsers userName={e.match.params.userName}/>}

@@ -10,7 +10,7 @@ const SearchUsers = ({userName, searchUsers, search}) => {
     }, [userName]);
     return (
         <div className="container">
-            {!search.loading ? (
+            {!search.loadingUsers ? (
                 <Fragment>
                     <h1 className='font-italic'>{`Search results for "${userName}"...`}</h1>
                     <Fragment>

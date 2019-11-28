@@ -2,15 +2,16 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9425d2d0-716e-414f-b3e3-d351decd58e9" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/components/movie/MovieCard.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/search/SearchMovies.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/actions/movie.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/movie/MoviePosterCard.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/movie/Movies.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/reducers/movie.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/actions/search.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/actions/search.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/actions/types.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/actions/types.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/search/SearchUsers.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/search/SearchUsers.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/reducers/search.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/reducers/search.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../movies-corner-spring-hibernate-server/MoviesCorner/src/java/com/me/dao/UserDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/../movies-corner-spring-hibernate-server/MoviesCorner/src/java/com/me/dao/UserDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/layout/HomePage.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/layout/HomePage.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/movie/MovieCard.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/movie/MovieCard.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/search/SearchMovies.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/search/SearchMovies.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/reducers/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/reducers/index.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -93,7 +94,7 @@
       <workItem from="1574632705229" duration="32799000" />
       <workItem from="1574787641917" duration="63000" />
       <workItem from="1574787731473" duration="63000" />
-      <workItem from="1574788068849" duration="9823000" />
+      <workItem from="1574788068849" duration="16666000" />
     </task>
     <servers />
   </component>

@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import {connect} from "react-redux";
 import {searchMovies} from "../../actions/search";
 import ReactLoading from "react-loading";
-import UserCard from "../user/UserCard";
 import MovieCard from "../movie/MovieCard";
 
 const SearchMovies = ({query, search, searchMovies}) => {

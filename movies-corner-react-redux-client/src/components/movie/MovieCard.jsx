@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {ImagePath} from "../../config/config";
 import {Link} from "react-router-dom";
 
-const MovieCard = ({type, movie}) => {
+const MovieCard = ({movie}) => {
     return (
         <div className="card card-horizontal">
 

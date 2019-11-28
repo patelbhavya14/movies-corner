@@ -3,6 +3,7 @@ import alert from "./alert";
 import auth from "./auth";
 import profile from "./profile";
 import search from "./search";
+import movie from "./movie";
 import { syncHistoryWithStore, routerReducer } from 'react-router-redux'
 
 export default combineReducers({
@@ -10,5 +11,6 @@ export default combineReducers({
     alert,
     profile,
     search,
+    movie,
     routing: routerReducer
 });

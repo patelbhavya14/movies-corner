@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import SearchBar from "./SearchBar";
-import Movies from "../movie/Movies";
+import Movies from "../home/Movies";
+import MovieCarousel from "../home/MovieCarousel";
 
 const HomePage = props => {
     return (

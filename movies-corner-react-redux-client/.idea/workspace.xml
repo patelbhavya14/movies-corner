@@ -2,16 +2,26 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9425d2d0-716e-414f-b3e3-d351decd58e9" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/actions/movie.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/movie/MoviePosterCard.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/movie/Movies.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/reducers/movie.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/actions/home.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/home/MovieCarousel.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/movie/Movie.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/movie/MovieCast.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/movie/MovieCastCard.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/movie/MovieDetails.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/movie/Trailer.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/reducers/home.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/actions/movie.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/actions/movie.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/actions/types.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/actions/types.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/layout/HomePage.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/layout/HomePage.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/movie/MovieCard.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/movie/MovieCard.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/movie/MovieCard.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/home/MovieCard.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/movie/MoviePosterCard.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/home/MoviePosterCard.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/movie/Movies.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/home/Movies.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/search/SearchMovies.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/search/SearchMovies.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/reducers/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/reducers/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/reducers/movie.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/reducers/movie.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -43,7 +53,7 @@
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/css" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -59,11 +69,11 @@
       <recent name="$PROJECT_DIR$/src/css" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/css" />
       <recent name="$PROJECT_DIR$/src/components/layout" />
       <recent name="$PROJECT_DIR$/src/images" />
       <recent name="$PROJECT_DIR$/src/reducers" />
       <recent name="$PROJECT_DIR$/src" />
-      <recent name="$PROJECT_DIR$/src/actions" />
     </key>
   </component>
   <component name="ServiceViewManager">
@@ -94,7 +104,7 @@
       <workItem from="1574632705229" duration="32799000" />
       <workItem from="1574787641917" duration="63000" />
       <workItem from="1574787731473" duration="63000" />
-      <workItem from="1574788068849" duration="16666000" />
+      <workItem from="1574788068849" duration="27857000" />
     </task>
     <servers />
   </component>
@@ -102,6 +112,14 @@
     <option name="version" value="1" />
   </component>
   <component name="WindowStateProjectService">
+    <state x="458" y="203" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1574908496293">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state x="458" y="203" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1440.900@0.0.1440.900" timestamp="1574908496293" />
+    <state x="365" y="69" width="710" height="762" key="find.popup" timestamp="1574908270897">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state x="365" y="69" width="710" height="762" key="find.popup/0.0.1440.900@0.0.1440.900" timestamp="1574908270897" />
     <state x="385" y="196" width="670" height="676" key="search.everywhere.popup" timestamp="1574790057878">
       <screen x="0" y="0" width="1440" height="900" />
     </state>

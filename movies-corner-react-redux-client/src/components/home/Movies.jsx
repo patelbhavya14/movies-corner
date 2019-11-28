@@ -1,8 +1,7 @@
 import React, {Fragment, useEffect} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import {getPopularMovies, getNowPlayingMovies} from "../../actions/movie";
-import MovieCard from "./MovieCard";
+import {getPopularMovies, getNowPlayingMovies} from "../../actions/home";
 import MoviePosterCard from "./MoviePosterCard";
 
 const Movies = ({type, movie, getPopularMovies, getNowPlayingMovies}) => {
@@ -57,7 +56,7 @@ Movies.propTypes = {
 };
 
 const mapStateToProps = state => ({
-    movie: state.movie
+    movie: state.home
 });
 
 export default connect(mapStateToProps, {getPopularMovies, getNowPlayingMovies})(Movies);

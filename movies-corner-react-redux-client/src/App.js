@@ -13,6 +13,7 @@ import Profile from "./components/user/Profile";
 import HomePage from "./components/layout/HomePage";
 import SearchUsers from "./components/search/SearchUsers";
 import SearchMovies from "./components/search/SearchMovies";
+import Movie from "./components/movie/Movie";
 
 if(localStorage.token) {
   setAuthToken(localStorage.token);
@@ -45,6 +46,9 @@ function App() {
             />
             <Route exact path='/search/user/:userName'
                    component={(e) => <SearchUsers userName={e.match.params.userName}/>}
+            />
+            <Route exact path='/movie/:movieId'
+                   component={(e) => <Movie movieId={e.match.params.movieId} />}
             />
           {/*</Switch>*/}
         </Router>

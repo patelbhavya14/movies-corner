@@ -1,29 +1,53 @@
-import {GET_NOW_PLAYING_MOVIES_SUCCESS, GET_POPULAR_MOVIES_SUCCESS} from "../actions/types";
+import {
+    GET_CAST,
+    GET_CAST_ERROR,
+    GET_MOVIE_DETAILS,
+    GET_MOVIE_DETAILS_ERROR,
+    GET_TRAILER,
+    GET_TRAILER_ERROR
+} from "../actions/types";
 
 const initialState = {
-    popularMovies: [],
-    nowplayingMovies: [],
-    loadingpopularMovies: true,
-    loadingnowplayingMovies: true,
     movie: null,
-    loadingMovie: false
+    trailer: null,
+    cast: [],
+    movieLoading: true
 };
 
 export default function(state = initialState, action) {
     const {type, payload} = action;
 
-    switch (type) {
-        case GET_POPULAR_MOVIES_SUCCESS:
+    switch(type) {
+        case GET_MOVIE_DETAILS:
             return {
                 ...state,
-                popularMovies: payload,
-                loadingpopularMovies: false
+                movie: payload,
+                movieLoading: false
             };
-        case GET_NOW_PLAYING_MOVIES_SUCCESS:
+        case GET_MOVIE_DETAILS_ERROR:
             return {
                 ...state,
-                nowplayingMovies: payload,
-                loadingnowplayingMovies: false
+                movieLoading: true
+            };
+        case GET_TRAILER:
+            return {
+                ...state,
+                trailer: payload
+            };
+        case GET_TRAILER_ERROR:
+            return {
+                ...state,
+                trailer: null
+            };
+        case GET_CAST:
+            return {
+                ...state,
+                cast: payload
+            };
+        case GET_CAST_ERROR:
+            return {
+                ...state,
+                cast:[]
             };
         default:
             return state;

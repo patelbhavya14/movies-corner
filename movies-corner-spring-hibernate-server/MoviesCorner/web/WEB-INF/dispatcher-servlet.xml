@@ -53,4 +53,5 @@
     <bean id="authDao" class="com.me.dao.AuthDAO" />
     <bean id="jwtTokenUtil" class="com.me.config.JwtTokenUtil" />
 
+    <bean id="movieDao" class="com.me.dao.MovieDAO" />
 </beans>

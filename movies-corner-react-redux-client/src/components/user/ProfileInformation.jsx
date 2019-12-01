@@ -7,8 +7,9 @@ import FollowButton from "./FollowButton";
 import ReactLoading from "react-loading";
 import Avatar from "react-avatar";
 
-const ProfileInformation = ({userId, profile:{user, loadingUser}, getProfileInformation, authId}) => {
+const ProfileInformation = ({userId, profile:{user, loadingUser}, getProfileInformation, auth}) => {
     useEffect(() => {
+        console.log("information fetched");
         getProfileInformation(userId);
     },[userId]);
 
@@ -17,9 +18,8 @@ const ProfileInformation = ({userId, profile:{user, loadingUser}, getProfileInfo
             {
                 !loadingUser? (
                 <div className="text-center">
-                    <p>
                         <Avatar name={`${user.firstName} ${user.lastName}`} size="200" round={true}/>
-                    </p>
+
                     <p className="h1">
                         {user.firstName} {user.lastName}
                     </p>
@@ -30,11 +30,10 @@ const ProfileInformation = ({userId, profile:{user, loadingUser}, getProfileInfo
                         {user.userRole}
                     </p>
                     {
-                        authId.user && Number(authId.user.userId) !== Number(userId)?
+                        auth.user && Number(auth.user.userId) !== Number(userId)?
                         (
                             <FollowButton isFollowing={user.isFollowing} userId={userId}/>
-                        ):
-                        (<p></p>)
+                        ): (<p></p>)
                     }
                 </div>
                 ) :(<ReactLoading type='bars'/>)
@@ -50,7 +49,7 @@ ProfileInformation.propTypes = {
 
 const mapStateToProps = state => ({
     profile: state.profile,
-    authId: state.auth
+    auth: state.auth
 });
 
 export default connect(mapStateToProps, {getProfileInformation})(ProfileInformation);

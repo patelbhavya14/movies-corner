@@ -7,6 +7,7 @@ import {getMovieDetails} from "../../actions/movie";
 import YouTube from 'react-youtube';
 import Trailer from "./Trailer";
 import MovieCast from "./MovieCast";
+import WatchListButton from "./WatchListButton";
 
 const Movie = ({movieId, movie: {movie, movieLoading}, getMovieDetails}) => {
     useEffect(() => {
@@ -35,6 +36,7 @@ const Movie = ({movieId, movie: {movie, movieLoading}, getMovieDetails}) => {
                             </div>
                             <div className="col-md-5 col-sm-12 text-light">
                                 <MovieDetails movie={movie}/>
+                                <WatchListButton/>
                             </div>
                             <div className="col-md-4 col-sm-12 text-light">
                                 <Trailer movieId={movieId}/>

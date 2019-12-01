@@ -4,7 +4,6 @@ import {connect} from "react-redux";
 import {follow, unfollow} from "../../actions/profile";
 
 const FollowButton = ({userId, isFollowing, follow, unfollow}) => {
-
     return (
       <Fragment>
                     {

@@ -39,7 +39,7 @@ const MovieDetails = ({movie: {title, overview, runtime, genres, release_date}})
                 </ul>
             </div>
             <div className="row">
-                <span className="justify-content-center">
+                <span className="justify-content-center text-justify">
                     {overview}
                 </span>
             </div>

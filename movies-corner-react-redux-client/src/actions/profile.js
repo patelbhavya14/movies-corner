@@ -12,7 +12,6 @@ import {
 export const getProfileInformation = (userId) => async dispatch => {
     try {
         const res = await axios.get(`http://localhost:8080/MoviesCorner/api/users/${userId}`);
-        console.log(res.data);
         dispatch({
             type: PROFILE_INFORMATION_SUCCESS,
             payload: res.data

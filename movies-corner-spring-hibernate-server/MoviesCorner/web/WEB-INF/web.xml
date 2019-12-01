@@ -33,6 +33,7 @@
         <url-pattern>/api/auth/getUserDetails</url-pattern>
         <url-pattern>/api/users/follow/*</url-pattern>
         <url-pattern>/api/users/unfollow/*</url-pattern>
+        <url-pattern>/api/movies/watchlist/add/*</url-pattern>
     </filter-mapping>
     
     <session-config>

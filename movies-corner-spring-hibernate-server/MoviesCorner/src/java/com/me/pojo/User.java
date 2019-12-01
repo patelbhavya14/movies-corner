@@ -8,6 +8,7 @@ package com.me.pojo;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.CascadeType;
@@ -17,6 +18,7 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -30,8 +32,8 @@ import javax.persistence.Table;
 
 @Entity
 @Table (name="users")
-public class User {
-    @Id @GeneratedValue
+public class User implements Serializable {
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="userId")
     private int userId;
     
@@ -61,6 +63,10 @@ public class User {
     @JsonIgnore
     @ManyToMany(cascade=CascadeType.ALL, fetch = FetchType.EAGER, mappedBy="followings")
     private Set<User> followers = new HashSet<>();
+    
+    @JsonIgnore
+    @ManyToMany(mappedBy = "watchListUsers", cascade=CascadeType.ALL)
+    private Set<Movie> watchlist = new HashSet<>();
     
     public User() {
         
@@ -136,9 +142,27 @@ public class User {
     public void setFollowings(Set<User> followings) {
         this.followings = followings;
     }
+
+    public Set<Movie> getWatchlist() {
+        return watchlist;
+    }
+
+    public void setWatchlist(Set<Movie> watchlist) {
+        this.watchlist = watchlist;
+    }
+    
+    public void addFollowing(User user) {
+        followings.add(user);
+        user.followers.add(this);
+    }
+    
+    public void removeFollowing(User user) {
+        followings.remove(user);
+        user.followers.remove(this);
+    }
     
     @Override
     public String toString() {
-        return userName+" "+password+" "+firstName+" "+lastName;
+        return userName+" "+firstName+" "+lastName;
     }
 }

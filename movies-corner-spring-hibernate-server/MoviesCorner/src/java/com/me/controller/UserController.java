@@ -5,7 +5,6 @@
  */
 package com.me.controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.me.config.JwtTokenUtil;
 import com.me.dao.UserDAO;
 import com.me.exception.UserException;
@@ -28,7 +27,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -95,9 +93,8 @@ public class UserController {
                 String token = headers.get("x-auth-token").get(0);
                 requestingUser += jwtTokenUtil.getUserIdFromToken(token.substring(7));
             }
-            System.out.println("REQUESTING USERID="+requestingUser);
+            
             User user = userDao.getUser(userId);
-            System.out.println("SUBJECT USER="+user);
             JSONObject userJson = new JSONObject();
             userJson.put("userId", user.getUserId());
             userJson.put("userName", user.getUserName());
@@ -107,7 +104,6 @@ public class UserController {
             
             if (!requestingUser.equals("guest")) {
                 User reqUser = userDao.getUser(requestingUser);
-                System.out.println("REQUESTING USER="+reqUser);
                 if (reqUser.getFollowings().contains(user)) {
                     userJson.put("isFollowing", true);
                 } else {
@@ -139,7 +135,6 @@ public class UserController {
     public ResponseEntity<Object> follow(@PathVariable String followingId, HttpServletRequest request) throws Exception {
         try {
             User user = (User) request.getAttribute("user");
-            System.out.println("user in token="+user);
             userDao.follow(user, followingId);
 
             return new ResponseEntity<>(new Message("Followed Successfully"), HttpStatus.OK);

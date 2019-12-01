@@ -2,26 +2,29 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9425d2d0-716e-414f-b3e3-d351decd58e9" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/actions/home.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/home/MovieCarousel.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/movie/Movie.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/movie/MovieCast.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/movie/MovieCastCard.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/movie/MovieDetails.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/movie/Trailer.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/reducers/home.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/movie/WatchListButton.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/user/Ratings.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/user/Reviews.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/user/WatchList.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/actions/movie.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/actions/movie.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/actions/types.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/actions/types.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/layout/HomePage.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/layout/HomePage.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/movie/MovieCard.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/home/MovieCard.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/movie/MoviePosterCard.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/home/MoviePosterCard.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/movie/Movies.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/home/Movies.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/search/SearchMovies.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/search/SearchMovies.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/reducers/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/reducers/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/reducers/movie.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/reducers/movie.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/actions/profile.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/actions/profile.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/movie/Movie.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/movie/Movie.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/movie/MovieDetails.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/movie/MovieDetails.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/user/FollowButton.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/user/FollowButton.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/user/Followers.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/user/Followers.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/user/Profile.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/user/Profile.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/user/ProfileActivities.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/user/ProfileActivities.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/user/ProfileInformation.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/user/ProfileInformation.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/css/tab.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/css/tab.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../movies-corner-spring-hibernate-server/MoviesCorner/src/java/com/me/controller/AuthController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../movies-corner-spring-hibernate-server/MoviesCorner/src/java/com/me/controller/AuthController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../movies-corner-spring-hibernate-server/MoviesCorner/src/java/com/me/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../movies-corner-spring-hibernate-server/MoviesCorner/src/java/com/me/controller/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../movies-corner-spring-hibernate-server/MoviesCorner/src/java/com/me/dao/UserDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/../movies-corner-spring-hibernate-server/MoviesCorner/src/java/com/me/dao/UserDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../movies-corner-spring-hibernate-server/MoviesCorner/src/java/com/me/pojo/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/../movies-corner-spring-hibernate-server/MoviesCorner/src/java/com/me/pojo/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../movies-corner-spring-hibernate-server/MoviesCorner/src/java/hibernate.cfg.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../movies-corner-spring-hibernate-server/MoviesCorner/src/java/hibernate.cfg.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../movies-corner-spring-hibernate-server/MoviesCorner/web/WEB-INF/dispatcher-servlet.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../movies-corner-spring-hibernate-server/MoviesCorner/web/WEB-INF/dispatcher-servlet.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../movies-corner-spring-hibernate-server/MoviesCorner/web/WEB-INF/web.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../movies-corner-spring-hibernate-server/MoviesCorner/web/WEB-INF/web.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -104,7 +107,7 @@
       <workItem from="1574632705229" duration="32799000" />
       <workItem from="1574787641917" duration="63000" />
       <workItem from="1574787731473" duration="63000" />
-      <workItem from="1574788068849" duration="27857000" />
+      <workItem from="1574788068849" duration="33382000" />
     </task>
     <servers />
   </component>

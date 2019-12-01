@@ -5,6 +5,9 @@ import {connect} from "react-redux";
 import Followings from "./Followings";
 import Followers from "./Followers";
 import '../../css/tab.css';
+import WatchList from "./WatchList";
+import Ratings from "./Ratings";
+import Reviews from "./Reviews";
 
 const ProfileActivities = ({userId, tab, profile: {loadingUser, user}}) => {
     const [currentTab, setCurrentTab] = useState(tab);
@@ -14,48 +17,54 @@ const ProfileActivities = ({userId, tab, profile: {loadingUser, user}}) => {
                     (<Fragment>
                         <ul className="nav nav-justified">
                             <li className="nav-item h3">
-                                <Link className={`${tab === 'watchList' ? 'active' : ''} text-light link`}
-                                      to={`/profile/${userId}`}
-                                      onClick={(e) => setCurrentTab("watchList")}>
+                                <span className={`${currentTab === 'watchList' ? 'active' : ''} text-light link`}
+                                      onClick={(e)=>setCurrentTab('watchList')}>
                                     WatchList
-                                </Link>
+                                </span>
                             </li>
                             <li className="nav-item h3">
-                                <Link className={`${tab === 'ratings' ? 'active' : ''} text-light link`}
-                                      to={`/profile/${userId}/ratings`}
-                                      onClick={(e) => setCurrentTab("ratings")}>
+                                <span className={`${currentTab === 'ratings' ? 'active' : ''} text-light link`}
+                                      onClick={(e)=>setCurrentTab('ratings')}>
                                     Ratings
-                                </Link>
+                                </span>
                             </li>
                             {
                                 user.userRole === 'Critic' && (
                                 <li className="nav-item h3">
-                                    <Link className={`${tab === 'reviews' ? 'active' : ''} text-light link`}
-                                          to="reviews">Reviews
-                                    </Link>
+                                    <span className={`${currentTab === 'reviews' ? 'active' : ''} text-light link`}
+                                          onClick={(e)=>setCurrentTab('reviews')}>Reviews
+                                    </span>
                                 </li>)
                             }
 
                             <li className="nav-item h3">
-                                <Link className={`${tab === 'followings' ? 'active' : ''} text-light link`}
-                                      to={`/profile/${userId}/followings`}>
+                                <span className={`${currentTab === 'followings' ? 'active' : ''} text-light link`}
+                                      onClick={(e)=>setCurrentTab('followings')}>
                                     Followings
-                                </Link>
+                                </span>
                             </li>
                             <li className="nav-item h3">
-                                <Link className={`${tab === 'followers' ? 'active' : ''} text-light link`}
-                                    to={`/profile/${userId}/followers`}>
+                                <span className={`${currentTab === 'followers' ? 'active' : ''} text-light link`}
+                                      onClick={(e)=>setCurrentTab('followers')}>
                                     Followers
-                                </Link>
+                                </span>
                             </li>
                         </ul>
                         <div>
                             {
-                                tab === 'followings' &&
-                                    (<Followings userId={userId}/>)
+                                currentTab === 'watchList' && (<WatchList userId={userId}/>)
                             }
                             {
-                                tab === 'followers' && (<Followers userId={userId}/>)
+                                currentTab === 'ratings' && (<Ratings userId={userId}/>)
+                            }
+                            {
+                                currentTab === 'reviews' && (<Reviews userId={userId}/>)
+                            }
+                            {
+                                currentTab === 'followings' && (<Followings userId={userId}/>)
+                            }
+                            {
+                                currentTab === 'followers' && (<Followers userId={userId}/>)
                             }
                         </div>
                     </Fragment>)

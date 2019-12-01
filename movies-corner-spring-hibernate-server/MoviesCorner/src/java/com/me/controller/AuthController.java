@@ -40,10 +40,9 @@ public class AuthController {
     @Qualifier("jwtTokenUtil")
     private JwtTokenUtil jwtTokenUtil;
 
-    @RequestMapping(value = "/authenticate", method = RequestMethod.POST)
+    @RequestMapping(value = "/authenticate", method = RequestMethod.POST, consumes="application/json")
     public ResponseEntity<Object> createAuthenticationToken(@RequestBody User u) throws Exception {
         try {
-            System.out.println("error System.out.println(\"here benchod\");");
             User user = authDao.authenticate(u.getUserName(),
                     u.getPassword());
             final String token = jwtTokenUtil.generateToken(user);

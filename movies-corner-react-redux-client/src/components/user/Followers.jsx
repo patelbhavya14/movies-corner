@@ -4,7 +4,7 @@ import {connect} from "react-redux";
 import {getFollowers} from "../../actions/profile";
 import UserCard from "./UserCard";
 
-const Followers = ({userId, getFollowers, profile:{followers}, auth}) => {
+const Followers = ({userId, getFollowers, profile:{followers}, history}) => {
     useEffect(() => {
         getFollowers(userId);
     }, [userId]);
@@ -12,8 +12,11 @@ const Followers = ({userId, getFollowers, profile:{followers}, auth}) => {
     return (
         <div>
             {
+                history
+            }
+            {
                 followers !== [] && followers.map((user, index) =>
-                    <UserCard user={user} type="followings" key={index}/>
+                    <UserCard user={user} type="followers" key={index}/>
                 )
             }
         </div>

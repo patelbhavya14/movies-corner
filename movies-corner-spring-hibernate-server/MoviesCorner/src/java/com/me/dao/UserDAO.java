@@ -72,6 +72,7 @@ public class UserDAO extends DAO {
 
             getSession().save(user);
             commit();
+            close();
             return user;
         } catch (HibernateException e) {
             rollback();
@@ -95,6 +96,7 @@ public class UserDAO extends DAO {
             List<User> list = criteria.list();
 
             commit();
+            close();
             return list;
         } catch (HibernateException e) {
             rollback();
@@ -110,10 +112,11 @@ public class UserDAO extends DAO {
             if (followingUser == user) {
                 throw new HibernateException("Same User");
             }
-            Set<User> followings = user.getFollowings();
-            followings.add(followingUser);
+            user.addFollowing(followingUser);
+            
             getSession().save(user);
             commit();
+            close();
             System.out.println("commited follow");
         } catch (HibernateException e) {
             rollback();
@@ -129,12 +132,10 @@ public class UserDAO extends DAO {
             if (unfollowingUser == user) {
                 throw new HibernateException("Same User");
             }
-            Set<User> followings = user.getFollowings();
-            followings.remove(unfollowingUser);
-
+            user.removeFollowing(unfollowingUser);
             getSession().save(user);
             commit();
-            System.out.println("commited unfollow");
+            close();
         } catch (HibernateException e) {
             rollback();
             throw new UserException(e.getMessage());
@@ -146,9 +147,8 @@ public class UserDAO extends DAO {
             begin();
             User user = getUserFromId(userId);
             Set<User> followings = user.getFollowings();
-            System.out.println("LIST=" + followings);
-            getSession().save(user);
             commit();
+            close();
             return followings;
         } catch (HibernateException e) {
             rollback();
@@ -161,10 +161,8 @@ public class UserDAO extends DAO {
             begin();
             User user = getUserFromId(userId);
             Set<User> followers = user.getFollowers();
-            System.out.println("LIST FOLLOWERS=" + followers);
-            getSession().save(user);
             commit();
-            System.out.println("commited unfollow");
+            close();
             return followers;
         } catch (HibernateException e) {
             rollback();

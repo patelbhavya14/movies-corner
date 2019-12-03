@@ -48,18 +48,19 @@ public class UserDAO extends DAO {
     }
 
     // Get user from UserController
-    public User getUser(String userId) throws UserException{
+    public User getUser(String userId) throws UserException {
         try {
             begin();
             User user = getSession().get(User.class, Integer.parseInt(userId));
             commit();
+            close();
             return user;
         } catch (HibernateException e) {
             rollback();
             throw new UserException("User does not exist");
         }
     }
-    
+
     public User register(User user) throws UserException {
         try {
             begin();
@@ -107,17 +108,14 @@ public class UserDAO extends DAO {
     public void follow(User user, String followingId) throws UserException {
         try {
             begin();
-
             User followingUser = getUserFromId(followingId);
-            if (followingUser == user) {
+            User u = getUserFromId(String.valueOf(user.getUserId()));
+            if (followingUser.equals(u)) {
                 throw new HibernateException("Same User");
             }
-            user.addFollowing(followingUser);
-            
-            getSession().save(user);
+            u.addFollowing(followingUser);
             commit();
             close();
-            System.out.println("commited follow");
         } catch (HibernateException e) {
             rollback();
             throw new UserException(e.getMessage());
@@ -129,11 +127,11 @@ public class UserDAO extends DAO {
             begin();
 
             User unfollowingUser = getUserFromId(unfollowingId);
-            if (unfollowingUser == user) {
+            User u = getUserFromId(String.valueOf(user.getUserId()));
+            if (unfollowingUser.equals(u)) {
                 throw new HibernateException("Same User");
             }
-            user.removeFollowing(unfollowingUser);
-            getSession().save(user);
+            u.removeFollowing(unfollowingUser);
             commit();
             close();
         } catch (HibernateException e) {

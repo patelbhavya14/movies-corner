@@ -34,6 +34,7 @@
         <url-pattern>/api/users/follow/*</url-pattern>
         <url-pattern>/api/users/unfollow/*</url-pattern>
         <url-pattern>/api/movies/watchlist/add/*</url-pattern>
+        <url-pattern>/api/movies/watchlist/remove/*</url-pattern>
     </filter-mapping>
     
     <session-config>

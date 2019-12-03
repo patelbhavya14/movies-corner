@@ -33,7 +33,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 
     AuthDAO authDao;
 
-    JwtTokenUtil jwtTokenUtil;
+    JwtTokenUtil jwtTokenUtil = new JwtTokenUtil();
 
     public AuthDAO getAuthDao() {
         return authDao;

@@ -8,6 +8,7 @@ package com.me.controller;
 import com.me.config.JwtTokenUtil;
 import com.me.dao.UserDAO;
 import com.me.exception.UserException;
+import com.me.pojo.Movie;
 import com.me.pojo.User;
 import com.me.response.Errors;
 import com.me.response.JwtResponse;
@@ -243,7 +244,7 @@ public class UserController {
                 userJson.put("userRole", u.getUserRole());
                 
                 if(!requestingUser.equals("guest")) {
-                    if(reqUser.getFollowers().contains(u))
+                    if(reqUser.getFollowings().contains(u))
                         userJson.put("isFollowing", true);
                     else
                         userJson.put("isFollowing", false);
@@ -261,4 +262,6 @@ public class UserController {
             return new ResponseEntity<>(new Errors(errors), HttpStatus.BAD_REQUEST);
         }
     }
+    
+    
 }

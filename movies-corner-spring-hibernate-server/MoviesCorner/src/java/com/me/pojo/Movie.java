@@ -8,6 +8,7 @@ package com.me.pojo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -35,11 +36,13 @@ public class Movie implements Serializable {
     @Column(name="movieImage")
     private String movieImage;
     
+    @JsonIgnore
     @ManyToMany(cascade=CascadeType.ALL)
     @JoinTable(name="watchlist",
             joinColumns=@JoinColumn(name="movieId"),
             inverseJoinColumns=@JoinColumn(name="userId"))
     private Set<User> watchListUsers = new HashSet<>();
+    
     
     public Movie() {
         
@@ -76,6 +79,24 @@ public class Movie implements Serializable {
     public void setWatchListUsers(Set<User> watchListUsers) {
         this.watchListUsers = watchListUsers;
     } 
+    
+    @Override
+    public int hashCode() {
+        return Objects.hash(movieId);
+    }
+    
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Movie other = (Movie) obj;
+        return Objects.equals(movieId, other.getMovieId());
+    }
+    
     
     @Override
     public String toString() {

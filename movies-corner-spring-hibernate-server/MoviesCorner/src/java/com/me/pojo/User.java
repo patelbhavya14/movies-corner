@@ -5,11 +5,11 @@
  */
 package com.me.pojo;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.io.Serializable;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -23,7 +23,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import org.hibernate.annotations.NaturalId;
 
 /**
  *
@@ -65,9 +67,9 @@ public class User implements Serializable {
     private Set<User> followers = new HashSet<>();
     
     @JsonIgnore
-    @ManyToMany(mappedBy = "watchListUsers", cascade=CascadeType.ALL)
+    @ManyToMany(mappedBy = "watchListUsers", cascade=CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Movie> watchlist = new HashSet<>();
-    
+            
     public User() {
         
     }
@@ -159,6 +161,23 @@ public class User implements Serializable {
     public void removeFollowing(User user) {
         followings.remove(user);
         user.followers.remove(this);
+    }
+    
+    @Override
+    public int hashCode() {
+        return Objects.hash(userName);
+    }
+ 
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        User other = (User) obj;
+        return Objects.equals(userName, other.getUserName());
     }
     
     @Override

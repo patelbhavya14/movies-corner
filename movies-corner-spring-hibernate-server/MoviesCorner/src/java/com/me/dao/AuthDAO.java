@@ -50,6 +50,7 @@ public class AuthDAO extends DAO{
             begin();
             User user = getSession().get(User.class, Integer.parseInt(userId));
             commit();
+            close();
             return user;
         } catch (HibernateException e) {
             rollback();

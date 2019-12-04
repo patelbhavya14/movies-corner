@@ -17,6 +17,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -24,28 +25,31 @@ import javax.persistence.Table;
  * @author bhaVYa
  */
 @Entity
-@Table(name="movies")
+@Table(name = "movies")
 public class Movie implements Serializable {
+
     @Id
-    @Column(name="movieId")
+    @Column(name = "movieId")
     private int movieId;
-    
-    @Column(name="movieName")
+
+    @Column(name = "movieName")
     private String movieName;
-    
-    @Column(name="movieImage")
+
+    @Column(name = "movieImage")
     private String movieImage;
-    
+
     @JsonIgnore
-    @ManyToMany(cascade=CascadeType.ALL)
-    @JoinTable(name="watchlist",
-            joinColumns=@JoinColumn(name="movieId"),
-            inverseJoinColumns=@JoinColumn(name="userId"))
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "watchlist",
+            joinColumns = @JoinColumn(name = "movieId"),
+            inverseJoinColumns = @JoinColumn(name = "userId"))
     private Set<User> watchListUsers = new HashSet<>();
-    
-    
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "movie")
+    private Set<Ratings> ratings = new HashSet<>();
+
     public Movie() {
-        
+
     }
 
     public int getMovieId() {
@@ -78,28 +82,38 @@ public class Movie implements Serializable {
 
     public void setWatchListUsers(Set<User> watchListUsers) {
         this.watchListUsers = watchListUsers;
-    } 
-    
+    }
+
+    public Set<Ratings> getRatings() {
+        return ratings;
+    }
+
+    public void setRatings(Set<Ratings> ratings) {
+        this.ratings = ratings;
+    }
+
     @Override
     public int hashCode() {
         return Objects.hash(movieId);
     }
-    
+
     @Override
     public boolean equals(Object obj) {
-        if (this == obj)
+        if (this == obj) {
             return true;
-        if (obj == null)
+        }
+        if (obj == null) {
             return false;
-        if (getClass() != obj.getClass())
+        }
+        if (getClass() != obj.getClass()) {
             return false;
+        }
         Movie other = (Movie) obj;
         return Objects.equals(movieId, other.getMovieId());
     }
-    
-    
+
     @Override
     public String toString() {
-        return this.movieId+""+this.movieName;
+        return this.movieId + "" + this.movieName;
     }
 }

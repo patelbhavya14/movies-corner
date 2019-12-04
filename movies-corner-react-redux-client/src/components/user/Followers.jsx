@@ -12,9 +12,6 @@ const Followers = ({userId, getFollowers, profile:{followers}, history}) => {
     return (
         <div>
             {
-                history
-            }
-            {
                 followers !== [] && followers.map((user, index) =>
                     <UserCard user={user} type="followers" key={index}/>
                 )

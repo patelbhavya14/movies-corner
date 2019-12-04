@@ -12,5 +12,6 @@
     <property name="hibernate.hbm2ddl.auto">update</property>
     <mapping class="com.me.pojo.User"/>
     <mapping class="com.me.pojo.Movie"/>
+    <mapping class="com.me.pojo.Ratings"/>
   </session-factory>
 </hibernate-configuration>

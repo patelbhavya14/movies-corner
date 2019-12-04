@@ -9,11 +9,17 @@ import static com.me.dao.DAO.getSession;
 import com.me.exception.MovieException;
 import com.me.exception.UserException;
 import com.me.pojo.Movie;
+import com.me.pojo.Ratings;
 import com.me.pojo.User;
-import com.me.response.Message;
 import java.util.List;
 import java.util.Set;
+import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
+import org.hibernate.Query;
+import org.hibernate.criterion.ProjectionList;
+import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Restrictions;
+import org.hibernate.transform.Transformers;
 
 /**
  *
@@ -115,6 +121,96 @@ public class MovieDAO extends DAO {
             close();
             return movies;
         } catch (UserException e) {
+            throw new MovieException(e.getMessage());
+        }
+    }
+    
+    // Add ratings for movie
+    public void addRatings(Movie movie, User user, double rating) throws MovieException {
+        try {
+            begin();
+            Movie m = addOrGetMovie(movie, "add");
+            User u = getUserFromId(user.getUserId());
+            Ratings r = new Ratings();
+            r.setRating(rating);
+            r.setMovie(m);
+            r.setUser(u);
+            m.getRatings().add(r);
+            commit();
+            close();
+        } catch(UserException e) {
+            throw new MovieException(e.getMessage());
+        } 
+    }
+    
+    // Update ratings for movie
+    public void updateRatings(Movie movie, User user, double rating) throws MovieException {
+        try {
+            begin();
+            String hql = "UPDATE Ratings r set rating=:rating WHERE movie.movieId=:movieId AND user.userId=:userId";
+            Query query = getSession().createQuery(hql);
+            query.setParameter("rating", rating);
+            query.setParameter("movieId", movie.getMovieId());
+            query.setParameter("userId", user.getUserId());
+            int result = query.executeUpdate();
+            System.out.println("RESULT UPDATE="+result);
+            commit();
+            close();
+        } catch(HibernateException e) {
+            throw new MovieException(e.getMessage());
+        } 
+    }
+
+    // Delete ratings for movie
+    public void deleteRatings(Movie movie, User user) throws MovieException {
+        try {
+            begin();
+            String hql = "DELETE FROM Ratings r WHERE movie.movieId=:movieId AND user.userId=:userId";
+            Query query = getSession().createQuery(hql);
+            query.setParameter("movieId", movie.getMovieId());
+            query.setParameter("userId", user.getUserId());
+            int result = query.executeUpdate();
+            System.out.println("RESULT DELETE="+result);
+            commit();
+            close();
+        } catch(HibernateException e) {
+            throw new MovieException(e.getMessage());
+        } 
+    }
+    
+    // Get average ratings
+    public double getAvgRatings(Movie movie) throws MovieException {
+        try {
+            begin();
+            Movie m = addOrGetMovie(movie, "add");
+            Criteria r = getSession().createCriteria(Ratings.class);
+            r.add(Restrictions.eq("movie.movieId", m.getMovieId()));
+            ProjectionList proj = Projections.projectionList();
+            proj.add(Projections.avg("rating"));
+            r.setProjection(proj);
+            double rating = (double) r.list().get(0);
+            commit();
+            close();
+            return rating;
+        } catch(HibernateException e) {
+            throw new MovieException(e.getMessage());
+        } 
+    }
+
+    // Get User Ratings
+    public List<Object> getUserRatings(String userId) throws MovieException {
+        try {
+            begin();
+            String hql = "SELECT m.movieId AS movieId, m.movieName as movieName, m.movieImage AS movieImage, r.rating as rating "
+                    + "FROM Ratings r JOIN Movie m ON r.movie.movieId = m.movieId "
+                    + "WHERE r.user.userId=:userId";
+            Query query = getSession().createQuery(hql);
+            query.setParameter("userId", Integer.parseInt(userId));
+            List<Object> ratings = query.setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP).list();
+            commit();
+            close();
+            return ratings;
+        } catch(HibernateException e) {
             throw new MovieException(e.getMessage());
         }
     }

@@ -21,7 +21,7 @@ const Movies = ({type, movie, getPopularMovies, getNowPlayingMovies}) => {
                         <div className="row">
                             {
                                 movie.popularMovies.map((m, index) =>
-                                    (<MoviePosterCard movie={m} />)
+                                    (<MoviePosterCard movie={m} key={index}/>)
                                 )
                             }
                         </div>
@@ -37,7 +37,7 @@ const Movies = ({type, movie, getPopularMovies, getNowPlayingMovies}) => {
                         <div className="row">
                             {
                                 movie.nowplayingMovies.map((m, index) =>
-                                    (<MoviePosterCard movie={m} />)
+                                    (<MoviePosterCard movie={m} key={index}/>)
                                 )
                             }
                         </div>

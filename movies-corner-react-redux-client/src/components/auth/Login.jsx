@@ -7,7 +7,7 @@ import {login} from "../../actions/auth";
 
 const Login = ({isAuthenticated, login}) => {
     const [formData, setFormData] = useState({
-        userName: "bhhvay",
+        userName: "malvi",
         password: "124"
     });
 

@@ -48,7 +48,6 @@ public class AuthController {
             final String token = jwtTokenUtil.generateToken(user);
             return new ResponseEntity<>(new JwtResponse(token), HttpStatus.OK);
         } catch (UserException e) {
-            System.out.println("BHOSDO"+e.getMessage());
             List<Message> errors = new ArrayList<>();
             errors.add(new Message(e.getMessage()));
             return new ResponseEntity<>(new Errors(errors), HttpStatus.BAD_REQUEST);
@@ -59,7 +58,6 @@ public class AuthController {
     public ResponseEntity<Object> getUserDetails(HttpServletRequest request) throws Exception {
         try {
             User user = (User) request.getAttribute("user");
-            
             return new ResponseEntity<>(user, HttpStatus.OK);
         } catch (Exception e) {
             List<Message> errors = new ArrayList<>();

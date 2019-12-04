@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 import store from './store';
 import {loadUser} from "./actions/auth";
-import setAuthToken from './utils/setAuthToken';
+import {setAuthToken} from './utils/setAuthToken';
 import { Provider } from 'react-redux';
 import Navigationbar from "./components/layout/Navigationbar";
 import Register from "./components/auth/Register";
@@ -16,7 +16,7 @@ import SearchMovies from "./components/search/SearchMovies";
 import Movie from "./components/movie/Movie";
 
 if(localStorage.token) {
-  setAuthToken(localStorage.token);
+  setAuthToken();
 }
 
 function App() {

@@ -36,7 +36,7 @@ const Movie = ({movieId, movie: {movie, movieLoading}, getMovieDetails}) => {
                             </div>
                             <div className="col-md-5 col-sm-12 text-light">
                                 <MovieDetails movie={movie}/>
-                                <WatchListButton/>
+                                <WatchListButton movie={movie}/>
                             </div>
                             <div className="col-md-4 col-sm-12 text-light">
                                 <Trailer movieId={movieId}/>

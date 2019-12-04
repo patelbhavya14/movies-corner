@@ -4,7 +4,12 @@ import {
     PROFILE_FOLLOWINGS_ERROR,
     PROFILE_FOLLOWINGS_SUCCESS,
     PROFILE_INFORMATION_ERROR,
-    PROFILE_INFORMATION_SUCCESS, USER_FOLLOW_ERROR, USER_FOLLOW_SUCCESS, USER_UNFOLLOW_ERROR, USER_UNFOLLOW_SUCCESS
+    PROFILE_INFORMATION_SUCCESS, PROFILE_WATCHLIST_ERROR,
+    PROFILE_WATCHLIST_SUCCESS,
+    USER_FOLLOW_ERROR,
+    USER_FOLLOW_SUCCESS,
+    USER_UNFOLLOW_ERROR,
+    USER_UNFOLLOW_SUCCESS
 } from "../actions/types";
 import {LOCATION_CHANGE} from "react-router-redux";
 
@@ -53,6 +58,16 @@ export default function(state = initialState, action) {
                 ...state,
                 followers: []
             };
+        case PROFILE_WATCHLIST_SUCCESS:
+            return {
+                ...state,
+                watchlist: payload
+            };
+        case PROFILE_WATCHLIST_ERROR:
+            return {
+                ...state,
+                watchlist: []
+            };
         case USER_FOLLOW_SUCCESS:
             return {
                 ...state,
@@ -73,7 +88,6 @@ export default function(state = initialState, action) {
         case USER_UNFOLLOW_ERROR:
             return state;
         case LOCATION_CHANGE:
-            console.warn('LOCATION_CHANGE from your reducer',action);
             return {
                 ...state,
                 user: null,

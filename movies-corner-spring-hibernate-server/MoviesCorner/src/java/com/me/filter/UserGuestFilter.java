@@ -25,7 +25,6 @@ import org.springframework.web.filter.OncePerRequestFilter;
 @Component
 @WebFilter({"/api/movies/watchlist"})
 public class UserGuestFilter extends OncePerRequestFilter {
-
     AuthDAO authDao = new AuthDAO();
 
     JwtTokenUtil jwtTokenUtil = new JwtTokenUtil();
@@ -48,6 +47,7 @@ public class UserGuestFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain fc) throws ServletException, IOException {
+        System.out.println("COMING HERE");
         String requestingUser = "";
         final String token = request.getHeader("x-auth-token");
         User reqUser = null;

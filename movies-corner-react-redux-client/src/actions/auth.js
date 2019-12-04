@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { setAlert } from "./alert";
-import setAuthToken  from '../utils/setAuthToken';
+import {setAuthToken}  from '../utils/setAuthToken';
 import {
     AUTH_ERROR,
     LOGIN_FAIL,
@@ -12,12 +12,12 @@ import {
 
 // Load User
 export const loadUser = () => async dispatch => {
-    if(localStorage.token) {
-        setAuthToken(localStorage.token);
-    }
+    // if(localStorage.token) {
+    //     setAuthToken(localStorage.token);
+    // }
 
     try {
-        const res = await axios.get('http://localhost:8080/MoviesCorner/api/auth/getUserDetails');
+        const res = await axios.get('http://localhost:8080/MoviesCorner/api/auth/getUserDetails', setAuthToken());
 
         dispatch({
             type: USER_LOADED,

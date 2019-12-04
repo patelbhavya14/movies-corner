@@ -31,7 +31,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 @Component
 public class JwtRequestFilter extends OncePerRequestFilter {
 
-    AuthDAO authDao;
+    AuthDAO authDao = new AuthDAO();
 
     JwtTokenUtil jwtTokenUtil = new JwtTokenUtil();
 

@@ -17,6 +17,7 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -31,47 +32,51 @@ import org.hibernate.annotations.NaturalId;
  *
  * @author bhaVYa
  */
-
 @Entity
-@Table (name="users")
+@Table(name = "users")
 public class User implements Serializable {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="userId")
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "userId")
     private int userId;
-    
-    @Column(name="userName")
+
+    @Column(name = "userName")
     private String userName;
-    
-    @JsonProperty( value = "password", access = JsonProperty.Access.WRITE_ONLY)
-    @Column(name="password")
+
+    @JsonProperty(value = "password", access = JsonProperty.Access.WRITE_ONLY)
+    @Column(name = "password")
     private String password;
-    
-    @Column(name="firstName")
+
+    @Column(name = "firstName")
     private String firstName;
-    
-    @Column(name="lastName")
+
+    @Column(name = "lastName")
     private String lastName;
-    
+
     @Enumerated(EnumType.STRING)
     private UserRole userRole;
-    
+
     @JsonIgnore
-    @ManyToMany(cascade=CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinTable(name="user_followings",
-            joinColumns=@JoinColumn(name="userId"),
-            inverseJoinColumns=@JoinColumn(name="followingId"))
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(name = "user_followings",
+            joinColumns = @JoinColumn(name = "userId"),
+            inverseJoinColumns = @JoinColumn(name = "followingId"))
     private Set<User> followings = new HashSet<>();
-    
+
     @JsonIgnore
-    @ManyToMany(cascade=CascadeType.ALL, fetch = FetchType.EAGER, mappedBy="followings")
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "followings")
     private Set<User> followers = new HashSet<>();
-    
+
     @JsonIgnore
-    @ManyToMany(mappedBy = "watchListUsers", cascade=CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToMany(mappedBy = "watchListUsers", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Movie> watchlist = new HashSet<>();
-            
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    private Set<Ratings> ratings = new HashSet<>();
+
     public User() {
-        
+
     }
 
     public User(String userName, String password, String firstName, String lastName) {
@@ -80,7 +85,7 @@ public class User implements Serializable {
         this.firstName = firstName;
         this.lastName = lastName;
     }
-    
+
     public int getUserId() {
         return userId;
     }
@@ -152,36 +157,47 @@ public class User implements Serializable {
     public void setWatchlist(Set<Movie> watchlist) {
         this.watchlist = watchlist;
     }
-    
+
     public void addFollowing(User user) {
         followings.add(user);
         user.followers.add(this);
     }
-    
+
     public void removeFollowing(User user) {
         followings.remove(user);
         user.followers.remove(this);
     }
-    
+
+    public Set<Ratings> getRatings() {
+        return ratings;
+    }
+
+    public void setRatings(Set<Ratings> ratings) {
+        this.ratings = ratings;
+    }
+
     @Override
     public int hashCode() {
         return Objects.hash(userName);
     }
- 
+
     @Override
     public boolean equals(Object obj) {
-        if (this == obj)
+        if (this == obj) {
             return true;
-        if (obj == null)
+        }
+        if (obj == null) {
             return false;
-        if (getClass() != obj.getClass())
+        }
+        if (getClass() != obj.getClass()) {
             return false;
+        }
         User other = (User) obj;
         return Objects.equals(userName, other.getUserName());
     }
-    
+
     @Override
     public String toString() {
-        return userName+" "+firstName+" "+lastName;
+        return userName + " " + firstName + " " + lastName;
     }
 }

@@ -45,6 +45,7 @@ public class Movie implements Serializable {
             inverseJoinColumns = @JoinColumn(name = "userId"))
     private Set<User> watchListUsers = new HashSet<>();
 
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "movie")
     private Set<Ratings> ratings = new HashSet<>();
 

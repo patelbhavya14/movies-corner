@@ -5,23 +5,21 @@ import {isWatchList, addToWatchList, removeFromWatchList} from "../../actions/mo
 
 const WatchListButton = ({movie:{id, title, backdrop_path}, isWatchList, isWatchlist, addToWatchList, removeFromWatchList}) => {
     useEffect(() => {
-        isWatchList(id, title, backdrop_path);
+        isWatchList(id);
     },[id]);
 
     return (
         <Fragment>
             {
                 isWatchlist !== null && isWatchlist === "true"?
-                    (<button className="btn btn-danger btn-outline-light w-100"
+                    (<i className="fas fa-bookmark btn btn-danger"
                              onClick={(e) => removeFromWatchList(id, title, backdrop_path)}
-                    >
-                        <i className="fas fa-user-minus" />&nbsp; Remove from Watchlist
-                    </button>):
-                    (<button className="btn btn-success btn-outline-light w-100"
-                             onClick={(e) => addToWatchList(id, title, backdrop_path)}
-                    >
-                        <i className="fas fa-user-plus" />&nbsp; Add to Watchlist
-                    </button>)
+                        />
+                        ):
+                    (<i className="fas fa-bookmark btn btn-success"
+                        onClick={(e) => addToWatchList(id, title, backdrop_path)}
+                    />
+                        )
             }
         </Fragment>
     );

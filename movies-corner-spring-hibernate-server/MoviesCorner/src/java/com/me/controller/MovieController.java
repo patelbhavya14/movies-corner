@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
@@ -167,13 +168,29 @@ public class MovieController {
         }
     }
 
-    @RequestMapping(value = "/movies/ratings/get",
+    @RequestMapping(value = "/movies/ratings/get/{movieId}",
             method = RequestMethod.GET,
             produces = "application/json")
-    public ResponseEntity<Object> getAvgRatings(@RequestBody Movie movie, HttpServletRequest request) {
+    public ResponseEntity<Object> getAvgRatings(@PathVariable String movieId, HttpServletRequest request) {
         try {
-            double avgRatings = movieDao.getAvgRatings(movie);
+            double avgRatings = movieDao.getAvgRatings(movieId);
             return new ResponseEntity<>(new Message(String.valueOf(avgRatings)), HttpStatus.OK);
+        } catch (MovieException e) {
+            List<Message> errors = new ArrayList<>();
+            errors.add(new Message(e.getMessage()));
+            return new ResponseEntity<>(new Errors(errors), HttpStatus.BAD_REQUEST);
+        }
+    }
+    
+    @RequestMapping(value = "/movies/ratings/users/get/{movieId}",
+            method = RequestMethod.GET,
+            produces = "application/json")
+    public ResponseEntity<Object> getUserRatingsForMovie(@PathVariable String movieId, HttpServletRequest request) {
+        try {
+            User user = (User) request.getAttribute("user");
+            JSONObject ratings = movieDao.getUserRatingsForMovie(movieId, user);
+            
+            return new ResponseEntity<>(ratings.toMap(), HttpStatus.OK);
         } catch (MovieException e) {
             List<Message> errors = new ArrayList<>();
             errors.add(new Message(e.getMessage()));

@@ -15,10 +15,8 @@ export const loadUser = () => async dispatch => {
     // if(localStorage.token) {
     //     setAuthToken(localStorage.token);
     // }
-
     try {
         const res = await axios.get('http://localhost:8080/MoviesCorner/api/auth/getUserDetails', setAuthToken());
-
         dispatch({
             type: USER_LOADED,
             payload: res.data

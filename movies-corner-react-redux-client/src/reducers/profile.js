@@ -4,7 +4,7 @@ import {
     PROFILE_FOLLOWINGS_ERROR,
     PROFILE_FOLLOWINGS_SUCCESS,
     PROFILE_INFORMATION_ERROR,
-    PROFILE_INFORMATION_SUCCESS, PROFILE_WATCHLIST_ERROR,
+    PROFILE_INFORMATION_SUCCESS, PROFILE_RATINGS_ERROR, PROFILE_RATINGS_SUCCESS, PROFILE_WATCHLIST_ERROR,
     PROFILE_WATCHLIST_SUCCESS,
     USER_FOLLOW_ERROR,
     USER_FOLLOW_SUCCESS,
@@ -67,6 +67,16 @@ export default function(state = initialState, action) {
             return {
                 ...state,
                 watchlist: []
+            };
+        case PROFILE_RATINGS_SUCCESS:
+            return {
+                ...state,
+                ratings: payload
+            };
+        case PROFILE_RATINGS_ERROR:
+            return {
+                ...state,
+                ratings: []
             };
         case USER_FOLLOW_SUCCESS:
             return {

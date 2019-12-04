@@ -20,6 +20,7 @@ import org.hibernate.criterion.ProjectionList;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.transform.Transformers;
+import org.json.JSONObject;
 
 /**
  *
@@ -32,7 +33,6 @@ public class MovieDAO extends DAO {
             User user = getSession().get(User.class, userId);
             return user;
         } catch (HibernateException e) {
-            rollback();
             throw new UserException("User does not exist");
         }
     }
@@ -121,6 +121,7 @@ public class MovieDAO extends DAO {
             close();
             return movies;
         } catch (UserException e) {
+            rollback();
             throw new MovieException(e.getMessage());
         }
     }
@@ -139,6 +140,7 @@ public class MovieDAO extends DAO {
             commit();
             close();
         } catch(UserException e) {
+            rollback();
             throw new MovieException(e.getMessage());
         } 
     }
@@ -157,6 +159,7 @@ public class MovieDAO extends DAO {
             commit();
             close();
         } catch(HibernateException e) {
+            rollback();
             throw new MovieException(e.getMessage());
         } 
     }
@@ -174,29 +177,69 @@ public class MovieDAO extends DAO {
             commit();
             close();
         } catch(HibernateException e) {
+            rollback();
             throw new MovieException(e.getMessage());
         } 
     }
     
     // Get average ratings
-    public double getAvgRatings(Movie movie) throws MovieException {
+    public double getAvgRatings(String movieId) throws MovieException {
         try {
             begin();
-            Movie m = addOrGetMovie(movie, "add");
-            Criteria r = getSession().createCriteria(Ratings.class);
-            r.add(Restrictions.eq("movie.movieId", m.getMovieId()));
-            ProjectionList proj = Projections.projectionList();
-            proj.add(Projections.avg("rating"));
-            r.setProjection(proj);
-            double rating = (double) r.list().get(0);
+            String hql = "SELECT AVG(r.rating) AS rating FROM Ratings r WHERE movie.movieId=:movieId";
+            Query query = getSession().createQuery(hql);
+            query.setParameter("movieId", Integer.parseInt(movieId));
+//            Criteria r = getSession().createCriteria(Ratings.class);
+//            r.add(Restrictions.eq("movie.movieId", Integer.parseInt(movieId)));
+//            ProjectionList proj = Projections.projectionList();
+//            proj.add(Projections.avg("rating"));
+//            r.setProjection(proj);
+            double rating;
+            if(query.list().get(0) == null)
+                rating = 0;
+            else
+                rating = (double) query.list().get(0);
             commit();
             close();
             return rating;
         } catch(HibernateException e) {
+            rollback();
             throw new MovieException(e.getMessage());
         } 
     }
 
+    // Get user rating for User
+    public JSONObject getUserRatingsForMovie(String movieId, User user) throws MovieException {
+        try {
+            begin();
+            String hql = "SELECT r.rating as rating "
+                    + "FROM Ratings r JOIN Movie m ON r.movie.movieId = m.movieId "
+                    + "WHERE r.user.userId=:userId AND m.movieId=:movieId";
+            Query query = getSession().createQuery(hql);
+            query.setParameter("userId", user.getUserId());
+            query.setParameter("movieId", Integer.parseInt(movieId));
+            double rating;
+            JSONObject json = new JSONObject();
+            
+            if(query.list().isEmpty()) {
+                rating = 0;
+                json.put("rating", rating);
+                json.put("action", "add");
+            } else {
+                rating = (double) query.list().get(0);
+                json.put("rating", rating);
+                json.put("action", "update");
+            }
+                
+            commit();
+            close();
+            return json;
+        } catch(HibernateException e) {
+            rollback();
+            throw new MovieException(e.getMessage());
+        }
+    }
+    
     // Get User Ratings
     public List<Object> getUserRatings(String userId) throws MovieException {
         try {
@@ -211,8 +254,8 @@ public class MovieDAO extends DAO {
             close();
             return ratings;
         } catch(HibernateException e) {
+            rollback();
             throw new MovieException(e.getMessage());
         }
     }
-
 }

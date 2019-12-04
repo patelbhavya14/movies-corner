@@ -5,7 +5,7 @@ import {
     PROFILE_FOLLOWINGS_ERROR,
     PROFILE_FOLLOWINGS_SUCCESS,
     PROFILE_INFORMATION_ERROR,
-    PROFILE_INFORMATION_SUCCESS,
+    PROFILE_INFORMATION_SUCCESS, PROFILE_RATINGS_ERROR, PROFILE_RATINGS_SUCCESS,
     PROFILE_WATCHLIST_ERROR, PROFILE_WATCHLIST_SUCCESS,
     USER_FOLLOW_ERROR,
     USER_FOLLOW_SUCCESS,
@@ -105,4 +105,19 @@ export const getWatchList = (userId) => async dispatch => {
           type: PROFILE_WATCHLIST_ERROR
       });
   }
+};
+
+// Get user ratings
+export const getUserRatings = (userId) => async dispatch => {
+    try {
+        const res = await axios.get(`http://localhost:8080/MoviesCorner/api/movies/ratings/users/${userId}`);
+        dispatch({
+            type: PROFILE_RATINGS_SUCCESS,
+            payload: res.data
+        });
+    } catch(err) {
+        dispatch({
+            type: PROFILE_RATINGS_ERROR
+        });
+    }
 };

@@ -1,13 +1,22 @@
 import axios from "axios";
 import {APIKey} from "../config/config";
 import {
-    ADD_WATCHLIST, ADD_WATCHLIST_ERROR,
+    ADD_RATING, ADD_RATING_ERROR,
+    ADD_WATCHLIST,
+    ADD_WATCHLIST_ERROR, DELETE_RATING, DELETE_RATING_ERROR,
     GET_CAST,
     GET_CAST_ERROR,
     GET_MOVIE_DETAILS,
     GET_MOVIE_DETAILS_ERROR,
+    GET_RATINGS,
+    GET_RATINGS_ERROR,
     GET_TRAILER,
-    GET_TRAILER_ERROR, IS_WATCHLIST, IS_WATCHLIST_ERROR, REMOVE_WATCHLIST, REMOVE_WATCHLIST_ERROR
+    GET_TRAILER_ERROR,
+    GET_USER_RATING_FOR_MOVIE, GET_USER_RATING_FOR_MOVIE_ERROR,
+    IS_WATCHLIST,
+    IS_WATCHLIST_ERROR,
+    REMOVE_WATCHLIST,
+    REMOVE_WATCHLIST_ERROR, UPDATE_RATING, UPDATE_RATING_ERROR
 } from "./types";
 import {setAuthToken} from "../utils/setAuthToken";
 
@@ -121,6 +130,98 @@ export const removeFromWatchList = (id, name, image) => async dispatch => {
     } catch(err) {
         dispatch({
             type: REMOVE_WATCHLIST_ERROR
+        });
+    }
+};
+
+// Get Ratings
+export const getRatings = (id) => async dispatch => {
+    try {
+        const res = await axios.get(`http://localhost:8080/MoviesCorner/api/movies/ratings/get/${id}`);
+
+        dispatch({
+            type: GET_RATINGS,
+            payload: res.data.message
+        })
+    } catch(err) {
+        dispatch({
+           type: GET_RATINGS_ERROR
+        });
+    }
+};
+
+// Get user rating for movie
+export const getUserRatingForMovie = (id) => async dispatch => {
+    try {
+        const res = await axios.get(`http://localhost:8080/MoviesCorner/api/movies/ratings/users/get/${id}`, setAuthToken());
+
+        dispatch({
+            type: GET_USER_RATING_FOR_MOVIE,
+            payload: res.data
+        })
+    } catch(err) {
+        console.log("ERROR IS="+JSON.stringify(err));
+        dispatch({
+            type: GET_USER_RATING_FOR_MOVIE_ERROR
+        });
+    }
+};
+
+// Add rating
+export const addRating = (id, name, image, rating) => async dispatch => {
+    try {
+        let body = {
+            movieId: id,
+            movieName: name,
+            movieImage: image
+        };
+        const res = await axios.post(`http://localhost:8080/MoviesCorner/api/movies/ratings/add/${rating}`, body, setAuthToken());
+        dispatch({
+            type: ADD_RATING,
+            payload: rating
+        });
+    } catch (err) {
+        dispatch({
+            type: ADD_RATING_ERROR
+        });
+    }
+};
+
+// Update rating for movie
+export const updateRating = (id, name, image, rating) => async dispatch => {
+    try {
+        let body = {
+            movieId: id,
+            movieName: name,
+            movieImage: image
+        };
+        const res = await axios.post(`http://localhost:8080/MoviesCorner/api/movies/ratings/update/${rating}`, body, setAuthToken());
+        dispatch({
+            type: UPDATE_RATING,
+            payload: rating
+        });
+    } catch (err) {
+        dispatch({
+            type: UPDATE_RATING_ERROR
+        });
+    }
+};
+
+// Delete rating for movie
+export const deleteRating = (id, name, image) => async dispatch => {
+    try {
+        let body = {
+            movieId: id,
+            movieName: name,
+            movieImage: image
+        };
+        const res = await axios.post(`http://localhost:8080/MoviesCorner/api/movies/ratings/delete`, body, setAuthToken());
+        dispatch({
+            type: DELETE_RATING
+        });
+    } catch (err) {
+        dispatch({
+            type: DELETE_RATING_ERROR
         });
     }
 };

@@ -72,6 +72,7 @@ public class User implements Serializable {
     @ManyToMany(mappedBy = "watchListUsers", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Movie> watchlist = new HashSet<>();
 
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
     private Set<Ratings> ratings = new HashSet<>();
 

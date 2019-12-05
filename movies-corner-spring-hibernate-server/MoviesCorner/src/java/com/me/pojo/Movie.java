@@ -7,7 +7,9 @@ package com.me.pojo;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 import javax.persistence.CascadeType;
@@ -48,6 +50,10 @@ public class Movie implements Serializable {
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "movie")
     private Set<Ratings> ratings = new HashSet<>();
+    
+    @JsonIgnore
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "movie")
+    private Set<Reviews> reviews = new HashSet<>();
 
     public Movie() {
 
@@ -91,6 +97,14 @@ public class Movie implements Serializable {
 
     public void setRatings(Set<Ratings> ratings) {
         this.ratings = ratings;
+    }
+
+    public Set<Reviews> getReviews() {
+        return reviews;
+    }
+
+    public void setReviews(Set<Reviews> reviews) {
+        this.reviews = reviews;
     }
 
     @Override

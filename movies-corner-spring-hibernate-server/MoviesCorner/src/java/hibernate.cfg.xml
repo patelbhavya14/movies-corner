@@ -13,5 +13,6 @@
     <mapping class="com.me.pojo.User"/>
     <mapping class="com.me.pojo.Movie"/>
     <mapping class="com.me.pojo.Ratings"/>
+    <mapping class="com.me.pojo.Reviews"/>
   </session-factory>
 </hibernate-configuration>

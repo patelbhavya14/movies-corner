@@ -10,8 +10,14 @@ import com.me.exception.MovieException;
 import com.me.exception.UserException;
 import com.me.pojo.Movie;
 import com.me.pojo.Ratings;
+import com.me.pojo.Reviews;
 import com.me.pojo.User;
+import java.text.Format;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
@@ -155,7 +161,6 @@ public class MovieDAO extends DAO {
             query.setParameter("movieId", movie.getMovieId());
             query.setParameter("userId", user.getUserId());
             int result = query.executeUpdate();
-            System.out.println("RESULT UPDATE="+result);
             commit();
             close();
         } catch(HibernateException e) {
@@ -173,7 +178,6 @@ public class MovieDAO extends DAO {
             query.setParameter("movieId", movie.getMovieId());
             query.setParameter("userId", user.getUserId());
             int result = query.executeUpdate();
-            System.out.println("RESULT DELETE="+result);
             commit();
             close();
         } catch(HibernateException e) {
@@ -253,6 +257,136 @@ public class MovieDAO extends DAO {
             commit();
             close();
             return ratings;
+        } catch(HibernateException e) {
+            rollback();
+            throw new MovieException(e.getMessage());
+        }
+    }
+
+    // Add review for movie
+    public void addReview(User user, Movie movie, String review) throws MovieException  {
+        try {
+            begin();
+            User u = getUserFromId(user.getUserId());
+            Movie m = addOrGetMovie(movie, "add");
+            Reviews r = new Reviews();
+            r.setReview(review);
+            r.setReviewDate(new Date());
+            r.setMovie(m);
+            r.setUser(u);
+            getSession().save(r);
+            commit();
+            close();
+        } catch(UserException e) {
+            rollback();
+            throw new MovieException(e.getMessage());
+        }
+    }
+    
+    // Update review for movie
+    public void updateReview(User user, int reviewId, String review) throws MovieException  {
+        try {
+            begin();
+            User u = getUserFromId(user.getUserId());
+            String hql = "UPDATE Reviews r SET review=:review WHERE r.reviewId=:reviewId AND r.user.userId=:userId";
+            Query query = getSession().createQuery(hql);
+            query.setParameter("review", review);
+            query.setParameter("reviewId", reviewId);
+            query.setParameter("userId", u.getUserId());
+            
+            if(query.executeUpdate() == 0)
+                throw new UserException("Not updated or review not found");
+            commit();
+            close();
+        } catch(UserException e) {
+            rollback();
+            throw new MovieException(e.getMessage());
+        }
+    }
+    
+    // Delete review for movie
+    public void deleteReview(User user, int reviewId) throws MovieException  {
+        try {
+            begin();
+            User u = getUserFromId(user.getUserId());
+            String hql = "DELETE FROM Reviews r WHERE reviewId=:reviewId AND user.userId=:userId";
+            Query query = getSession().createQuery(hql);
+            query.setParameter("reviewId", reviewId);
+            query.setParameter("userId", u.getUserId());
+            
+            if(query.executeUpdate() == 0)
+                throw new UserException("Not deleted or review not found");
+            commit();
+            close();
+        } catch(UserException e) {
+            rollback();
+            throw new MovieException(e.getMessage());
+        }
+    }
+    
+    // Get Reviews for movie
+    public List<Map<String, Object>> getReviewsForMovie(String movieId) throws MovieException {
+        try {
+            begin();
+            String hql = "FROM Reviews WHERE movie.movieId=:movieId ORDER BY reviewDate DESC";
+            Query query = getSession().createQuery(hql);
+            query.setParameter("movieId", Integer.parseInt(movieId));
+            
+            List<Map<String, Object>> list = new ArrayList<>();
+            List<Reviews> reviews = query.list();
+            for(Reviews r: reviews) {
+               JSONObject json = new JSONObject();
+               json.put("reviewId", r.getReviewId());
+               json.put("review", r.getReview());
+               Format formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+               json.put("reviewDate", formatter.format(r.getReviewDate()));
+               json.put("movieId",r.getMovie().getMovieId());
+               JSONObject user = new JSONObject();
+               user.put("userId", r.getUser().getUserId());
+               user.put("userName", r.getUser().getUserName());
+               user.put("firstName", r.getUser().getFirstName());
+               user.put("lastName", r.getUser().getLastName());
+               json.put("user", user);
+               list.add(json.toMap());
+            }
+            
+            commit();
+            close();
+            return list;
+        } catch(HibernateException e) {
+            rollback();
+            throw new MovieException(e.getMessage());
+        }
+    }
+    
+    // Get Reviews for Users
+    public List<Map<String, Object>> getReviewsForUser(String userId) throws MovieException {
+        try {
+            begin();
+            String hql = "FROM Reviews WHERE user.userId=:userId ORDER BY reviewDate DESC";
+            Query query = getSession().createQuery(hql);
+            query.setParameter("userId", Integer.parseInt(userId));
+            
+            List<Map<String, Object>> list = new ArrayList<>();
+            List<Reviews> reviews = query.list();
+            for(Reviews r: reviews) {
+               JSONObject json = new JSONObject();
+               json.put("reviewId", r.getReviewId());
+               json.put("review", r.getReview());
+               Format formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+               json.put("reviewDate", formatter.format(r.getReviewDate()));
+               json.put("userId", r.getUser().getUserId());
+               JSONObject movie = new JSONObject();
+               movie.put("movieId", r.getMovie().getMovieId());
+               movie.put("movieName", r.getMovie().getMovieName());
+               movie.put("movieImage", r.getMovie().getMovieImage());
+               json.put("movie", movie);
+               list.add(json.toMap());
+            }
+            
+            commit();
+            close();
+            return list;
         } catch(HibernateException e) {
             rollback();
             throw new MovieException(e.getMessage());

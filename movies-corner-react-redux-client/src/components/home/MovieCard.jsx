@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import PropTypes from 'prop-types';
 import {ImagePath} from "../../config/config";
 import {Link} from "react-router-dom";
+import AverageRatings from "../movie/AverageRatings";
 
 const MovieCard = ({movie, type}) => {
     useEffect(() => {
@@ -29,11 +30,21 @@ const MovieCard = ({movie, type}) => {
                 </div>
 
                 <div className="col-md-9 align-self-center">
-                    <section className="align-self-center text-decoration-non">
+                    <section className="align-self-center text-decoration-none">
                         <h1 className="card-title" style={{fontSize: "200%"}}>
                             {type === 'search'? `${movie.title}`:`${movie.movieName}`}
                         </h1>
                         <p className="card-text text-dark">{movie.overview}</p>
+                        {
+                            type === 'ratings' && (
+                                <p className='text-dark'>
+                                    <span className="h1">
+                                        {movie.rating}/<span className="h3">10</span>
+                                    </span>
+                                </p>
+                            )
+                        }
+
                     </section>
                 </div>
             </div>

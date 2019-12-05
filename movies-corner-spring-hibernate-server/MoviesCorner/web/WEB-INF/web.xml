@@ -39,6 +39,9 @@
         <url-pattern>/api/movies/ratings/update/*</url-pattern>
         <url-pattern>/api/movies/ratings/delete</url-pattern>
         <url-pattern>/api/movies/ratings/users/get/*</url-pattern>
+        <url-pattern>/api/movies/reviews/add</url-pattern>
+        <url-pattern>/api/movies/reviews/update</url-pattern>
+        <url-pattern>/api/movies/reviews/delete</url-pattern>
     </filter-mapping>
     
     <session-config>

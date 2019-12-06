@@ -14,7 +14,7 @@ const WatchList = ({userId, getWatchList, profile: {watchlist}}) => {
         <div>
             {
                 watchlist !== [] && watchlist.map((movie, index) =>
-                    <MovieCard movie={movie} type='profile' key={index}/>
+                    <MovieCard movie={movie} type='watchlist' key={index}/>
                 )
             }
         </div>

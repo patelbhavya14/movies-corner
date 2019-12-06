@@ -5,7 +5,7 @@ import RatingsButton from "./RatingsButton";
 
 const Ratings = ({movieId}) => {
     return (
-        <div className="row">
+        <div className="row ml-1">
             <RatingsButton movieId={movieId} /> &nbsp;&nbsp;
             <AverageRatings movieId={movieId} />
         </div>

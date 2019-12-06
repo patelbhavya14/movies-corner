@@ -1,5 +1,6 @@
 import axios from 'axios';
 import {
+    DELETE_REVIEW, DELETE_REVIEW_ERROR,
     PROFILE_FOLLOWERS_ERROR,
     PROFILE_FOLLOWERS_SUCCESS,
     PROFILE_FOLLOWINGS_ERROR,
@@ -140,4 +141,24 @@ export const getUserReviews = (userId) => async dispatch => {
             type: PROFILE_REVIEWS_ERROR
         });
     }
+};
+
+// Delete review
+export const deleteReview = (review) => async dispatch => {
+  try {
+      let body = {
+          reviewId: review.reviewId
+      };
+
+      const res = await axios.post(`http://localhost:8080/MoviesCorner/api/movies/reviews/delete`, body, setAuthToken());
+
+      dispatch({
+          type: DELETE_REVIEW,
+          payload: review
+      });
+  } catch(err) {
+      dispatch({
+         type: DELETE_REVIEW_ERROR
+      });
+  }
 };

@@ -2,6 +2,7 @@ import React,{Fragment} from 'react';
 import PropTypes from 'prop-types';
 import Avatar from "react-avatar";
 import {connect} from "react-redux";
+import Moment from "react-moment";
 
 const ReviewCard = ({review, auth}) => {
     return (
@@ -14,13 +15,24 @@ const ReviewCard = ({review, auth}) => {
                     }}>
                         <div className="col-md-4 p-0 float-left">
                             <Avatar name={`${review.user.firstName} ${review.user.lastName}`} round={true}/>
-
                         </div>
                         <div className="col-md-8 p-0 text-dark">
-                            <h2>{review.user.firstName} {review.user.lastName}</h2>
-                            {review.review}
+                            <h2>
+                                {review.user.firstName} {review.user.lastName}
+                            </h2>
+                            <p>
+                                <span>
+                                {review.review}
+                            </span>
+                            </p>
+                            <span>
+                                <i>
+                                    <Moment fromNow>
+                                        {review.reviewDate}
+                                    </Moment>
+                                </i>
+                            </span>
                         </div>
-
                     </div>
                 </div>
             )

@@ -31,22 +31,16 @@ const Movie = ({movieId, movie: {movie, movieLoading}, getMovieDetails}) => {
                 }>
                     <div className="container pt-5 pb-5 min-vh-100">
                         <div className="row">
-                            <div className="col-md-3 col-sm-12">
+                            <div className="col-md-3 col-sm-12 pr-3">
                                 <img src={`${ImagePath}${movie.poster_path}`} alt={movie.title} style={{
-                                    height: "350px",
-                                    width: "auto"
+                                    height: "auto",
+                                    width: "100%"
                                 }}/>
+                                <br/>
+                                <WatchListButton movie={movie}/>
                             </div>
                             <div className="col-md-5 col-sm-12 text-light">
                                 <MovieDetails movie={movie}/>
-                                <div className="row mt-3">
-                                    <div className="col-2">
-                                        <WatchListButton movie={movie}/>
-                                    </div>
-                                    <div className="col-10">
-                                        <Ratings movieId={movieId}/>
-                                    </div>
-                                </div>
                             </div>
                             <div className="col-md-4 col-sm-12 text-light">
                                 <Trailer movieId={movieId}/>

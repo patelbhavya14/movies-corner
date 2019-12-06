@@ -1,13 +1,15 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, Fragment} from 'react';
 import PropTypes from 'prop-types';
 import {ImagePath} from "../../config/config";
 import {Link} from "react-router-dom";
-import AverageRatings from "../movie/AverageRatings";
+import Moment from "react-moment";
 
-const MovieCard = ({movie, type}) => {
+const MovieCard = ({movie, type, action}) => {
     useEffect(() => {
-        if(type === "search")
+        if(type === 'search')
             setImage(`${ImagePath}`+`${movie.backdrop_path}`);
+        else if(type === 'reviews')
+            setImage(`${ImagePath}`+`${movie.movie.movieImage}`);
         else
             setImage(`${ImagePath}`+`${movie.movieImage}`);
     },[]);
@@ -31,10 +33,30 @@ const MovieCard = ({movie, type}) => {
 
                 <div className="col-md-9 align-self-center">
                     <section className="align-self-center text-decoration-none">
-                        <h1 className="card-title" style={{fontSize: "200%"}}>
-                            {type === 'search'? `${movie.title}`:`${movie.movieName}`}
-                        </h1>
-                        <p className="card-text text-dark">{movie.overview}</p>
+                        <span className="card-title h1" style={{fontSize: "200%"}}>
+                            {
+                                type === 'search' && `${movie.title}`
+                            }
+                            {
+                                (type === 'watchlist' || type === 'ratings') && `${movie.movieName}`
+                            }
+                            {
+                                type === 'reviews'  && `${movie.movie.movieName}`
+                            }
+                        </span>
+                        {
+                            type === 'reviews' &&
+                            <span className="float-right text-dark mt-2">
+                                <i className="fas fa-trash-alt h1 text-danger btn" onClick={
+                                    (e)=>action(movie)
+                                }/>
+                            </span>
+                        }
+
+                        {
+                            type === 'search' && <p className="card-text text-dark">{movie.overview}</p>
+                        }
+
                         {
                             type === 'ratings' && (
                                 <p className='text-dark'>
@@ -42,6 +64,23 @@ const MovieCard = ({movie, type}) => {
                                         {movie.rating}/<span className="h3">10</span>
                                     </span>
                                 </p>
+                            )
+                        }
+
+                        {
+                            type === 'reviews' && (
+                                <Fragment>
+                                    <p className='text-dark'>
+                                        <span className="font-italic">
+                                            {movie.review}
+                                        </span>
+                                    </p>
+                                    <p className="small text-dark">
+                                        <Moment format="D MMM YYYY" withTitle>
+                                            {movie.review.reviewDate}
+                                        </Moment>
+                                    </p>
+                                </Fragment>
                             )
                         }
 

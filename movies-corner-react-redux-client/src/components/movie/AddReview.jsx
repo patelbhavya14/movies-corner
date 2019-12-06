@@ -1,7 +1,9 @@
 import React, {Fragment, useState} from 'react';
+import {Link} from "react-router-dom";
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {addReview} from "../../actions/movie";
+import Avatar from "react-avatar";
 
 const AddReview = ({auth, movie:{id, title, backdrop_path}, addReview}) => {
     const [review, setReview] = useState("");
@@ -13,23 +15,31 @@ const AddReview = ({auth, movie:{id, title, backdrop_path}, addReview}) => {
                     {
                         auth.user.userRole === 'Critic' ?
                             (
-                                <div>
-                                    <div className="form-group mb-1">
-                                        <textarea
-                                               rows="2"
-                                               className="form-control"
-                                               name={review}
-                                               onChange={(e)=>
-                                                   setReview(e.target.value)
-                                        } />
-                                    </div>
-                                    <div className="form-group float-right mt-0 pt-0">
-                                        <button type="button" className="btn btn-success"
-                                                onClick={(e)=>
-                                                    addReview(id, title, backdrop_path, review)}
-                                        >
-                                            Add Review
-                                        </button>
+                                <div className="form-group">
+                                    <div className="input-group shadow-sm">
+                                            <span className="input-group-prepend input-group-item input-group-item-shrink p-2">
+                                                <Link to={`/profile/${auth.user.userId}`}>
+                                                    <Avatar name={`${auth.user.firstName} ${auth.user.lastName}`} round={true}/>
+                                                </Link>
+                                            </span>
+                                        <div className="input-group-append input-group-item h-100">
+                                            <textarea
+                                                className="form-control"
+                                                name={review}
+                                                placeholder="Add reviews here"
+                                                onChange={(e)=>
+                                                    setReview(e.target.value)
+                                                } />
+                                        </div>
+                                        <span className="input-group-append input-group-item input-group-item-shrink">
+                                            <button type="button" className="btn btn-success h-100"
+                                                    onClick={(e)=>
+                                                        addReview(id, title, backdrop_path, review)}
+                                            >
+                                                <i className="fas fa-comments"/> <br/>
+                                                Add Review
+                                            </button>
+                                        </span>
                                     </div>
                                 </div>
                             ):
@@ -38,7 +48,7 @@ const AddReview = ({auth, movie:{id, title, backdrop_path}, addReview}) => {
 
                 </Fragment>
             ): (
-                <p>Please login to comment</p>
+                <p>Please <Link to="/login" className="text-light"><u>Login</u></Link> to comment</p>
             )
         }
         </Fragment>

@@ -17,12 +17,16 @@ const RatingsButton = ({movie: {ratings, movie:{id, title, backdrop_path}},
                     <div>
                         {ratings.ratingAction === "update" &&
                             (
-                                <span><i className="fas fa-times-circle btn text-danger d-inline-block" onClick={
+                                <span>
+                                    <i className="fas fa-times-circle btn text-danger d-inline-block p-0 pr-2" onClick={
                                     (e) => deleteRating(id, title, backdrop_path)
-                                }/></span>
+                                }/>
+                                </span>
                             )
                         }
                         <Rating
+                            emptySymbol="far fa-star"
+                            fullSymbol="fas fa-star text-warning"
                             initialRating={ratings.userRating}
                             stop={10}
                             onChange={ratings.ratingAction === "update"?

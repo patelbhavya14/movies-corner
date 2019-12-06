@@ -2,8 +2,8 @@ import React, {Fragment} from 'react';
 import PropTypes from 'prop-types';
 import moment from "moment";
 import Moment from "react-moment";
-
-const MovieDetails = ({movie: {title, overview, runtime, genres, release_date}}) => {
+import Ratings from "./Ratings";
+const MovieDetails = ({movie: {id, title, overview, runtime, genres, release_date}}) => {
     return (
         <Fragment>
             <div className="row">
@@ -37,6 +37,9 @@ const MovieDetails = ({movie: {title, overview, runtime, genres, release_date}})
                         </small>
                     </li>
                 </ul>
+            </div>
+            <div className="row">
+                <Ratings movieId={id} />
             </div>
             <div className="row">
                 <span className="justify-content-center text-justify">

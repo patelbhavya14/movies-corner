@@ -1,4 +1,5 @@
 import {
+    DELETE_REVIEW, DELETE_REVIEW_ERROR,
     PROFILE_FOLLOWERS_ERROR,
     PROFILE_FOLLOWERS_SUCCESS,
     PROFILE_FOLLOWINGS_ERROR,
@@ -92,6 +93,11 @@ export default function(state = initialState, action) {
                 ...state,
                 reviews: []
             };
+        case DELETE_REVIEW:
+            return {
+                ...state,
+                reviews: state.reviews.filter( r=> r !== payload  )
+            };
         case USER_FOLLOW_SUCCESS:
             return {
                 ...state,
@@ -110,6 +116,7 @@ export default function(state = initialState, action) {
             };
         case USER_FOLLOW_ERROR:
         case USER_UNFOLLOW_ERROR:
+        case DELETE_REVIEW_ERROR:
             return state;
         case LOCATION_CHANGE:
             return {

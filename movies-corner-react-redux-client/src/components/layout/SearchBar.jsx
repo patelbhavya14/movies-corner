@@ -49,8 +49,6 @@ const SearchBar = ({searchUsers}) => {
                     onChange={setSearchQuery}/>
                 </div>
                 <span className="input-group-append input-group-item input-group-item-shrink">
-                    <input type="hidden" name="action" value="search"/>
-
                     {
                         searchType === 'User'? (
                             <Link to={`/search/user/${searchQuery}`}>
@@ -64,7 +62,6 @@ const SearchBar = ({searchUsers}) => {
                             </Link>
                         )
                     }
-
                 </span>
             </div>
         </div>

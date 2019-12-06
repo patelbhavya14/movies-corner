@@ -13,7 +13,7 @@ const AverageRatings = ({movieId, getRatings, movie}) => {
             {
                 !movie.ratings.avgLoading && (
                         <span className="h1">
-                            {movie.ratings.avgRating}/<span className="h2">10</span>
+                            {Number(movie.ratings.avgRating).toFixed(1)}/<span className="h2">10</span>
                         </span>
                 )
             }

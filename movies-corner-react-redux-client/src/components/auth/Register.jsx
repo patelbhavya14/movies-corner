@@ -8,7 +8,7 @@ import PropTypes from 'prop-types';
 
 const Register = ({ setAlert, register, isAuthenticated }) => {
     const [formData, setFormData] = useState({
-        userName: "bhhvay",
+        userName: "bhhavya",
         password: "124",
         password2: "124",
         firstName: "Bhavya",
@@ -29,7 +29,7 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
     };
 
     if (isAuthenticated) {
-        return <Redirect to='/'/>
+        return <Redirect to='/home'/>
     }
 
     return (

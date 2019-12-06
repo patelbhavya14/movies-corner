@@ -12,13 +12,19 @@ const WatchListButton = ({movie:{id, title, backdrop_path}, isWatchList, isWatch
         <Fragment>
             {
                 isWatchlist !== null && isWatchlist === "true"?
-                    (<i className="fas fa-bookmark btn btn-danger"
+                    (<button className="btn btn-danger w-100 mt-2"
                              onClick={(e) => removeFromWatchList(id, title, backdrop_path)}
-                        />
+                        >
+                            <i className="fas fa-check" />&nbsp;
+                            ADDED TO WATCHLIST
+                        </button>
                         ):
-                    (<i className="fas fa-bookmark btn btn-success"
+                    (<button className="btn btn-success w-100 mt-2"
                         onClick={(e) => addToWatchList(id, title, backdrop_path)}
-                    />
+                    >
+                            <i className="fas fa-bookmark" />&nbsp;
+                            ADD TO WATCHLIST
+                        </button>
                         )
             }
         </Fragment>

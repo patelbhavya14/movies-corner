@@ -1,13 +1,13 @@
 import axios from "axios";
 import {APIKey} from "../config/config";
 import {
-    ADD_RATING, ADD_RATING_ERROR,
+    ADD_RATING, ADD_RATING_ERROR, ADD_REVIEW, ADD_REVIEW_ERROR,
     ADD_WATCHLIST,
     ADD_WATCHLIST_ERROR, DELETE_RATING, DELETE_RATING_ERROR,
     GET_CAST,
     GET_CAST_ERROR,
     GET_MOVIE_DETAILS,
-    GET_MOVIE_DETAILS_ERROR,
+    GET_MOVIE_DETAILS_ERROR, GET_MOVIE_REVIEWS, GET_MOVIE_REVIEWS_ERROR,
     GET_RATINGS,
     GET_RATINGS_ERROR,
     GET_TRAILER,
@@ -224,4 +224,41 @@ export const deleteRating = (id, name, image) => async dispatch => {
             type: DELETE_RATING_ERROR
         });
     }
+};
+
+// Add review
+export const addReview = (id, title, image, review) => async dispatch => {
+  try {
+      let body = {
+          movieId: id,
+          movieName: title,
+          movieImage: image,
+          review: review
+      };
+      const res = await axios.post(`http://localhost:8080/MoviesCorner/api/movies/reviews/add`, body, setAuthToken());
+
+      dispatch({
+          type: ADD_REVIEW,
+          payload: res.data
+      });
+  } catch(err) {
+      dispatch({
+          type: ADD_REVIEW_ERROR
+      })
+  }
+};
+
+// Get reviews
+export const getReviews = (movieId) => async dispatch => {
+  try {
+      const res = await axios.get(`http://localhost:8080/MoviesCorner/api/movies/reviews/${movieId}`);
+      dispatch({
+         type: GET_MOVIE_REVIEWS,
+         payload: res.data
+      });
+  } catch(err) {
+      dispatch({
+         type: GET_MOVIE_REVIEWS_ERROR
+      });
+  }
 };

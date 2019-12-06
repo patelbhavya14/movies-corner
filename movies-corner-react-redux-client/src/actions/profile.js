@@ -5,8 +5,13 @@ import {
     PROFILE_FOLLOWINGS_ERROR,
     PROFILE_FOLLOWINGS_SUCCESS,
     PROFILE_INFORMATION_ERROR,
-    PROFILE_INFORMATION_SUCCESS, PROFILE_RATINGS_ERROR, PROFILE_RATINGS_SUCCESS,
-    PROFILE_WATCHLIST_ERROR, PROFILE_WATCHLIST_SUCCESS,
+    PROFILE_INFORMATION_SUCCESS,
+    PROFILE_RATINGS_ERROR,
+    PROFILE_RATINGS_SUCCESS,
+    PROFILE_REVIEWS_ERROR,
+    PROFILE_REVIEWS_SUCCESS,
+    PROFILE_WATCHLIST_ERROR,
+    PROFILE_WATCHLIST_SUCCESS,
     USER_FOLLOW_ERROR,
     USER_FOLLOW_SUCCESS,
     USER_UNFOLLOW_ERROR,
@@ -118,6 +123,21 @@ export const getUserRatings = (userId) => async dispatch => {
     } catch(err) {
         dispatch({
             type: PROFILE_RATINGS_ERROR
+        });
+    }
+};
+
+// Get user reviews
+export const getUserReviews = (userId) => async dispatch => {
+    try {
+        const res = await axios.get(`http://localhost:8080/MoviesCorner/api/movies/reviews/users/${userId}`);
+        dispatch({
+            type: PROFILE_REVIEWS_SUCCESS,
+            payload: res.data
+        });
+    } catch(err) {
+        dispatch({
+            type: PROFILE_REVIEWS_ERROR
         });
     }
 };

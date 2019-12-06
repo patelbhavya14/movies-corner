@@ -1,11 +1,11 @@
 import {
-    ADD_RATING,
+    ADD_RATING, ADD_REVIEW, ADD_REVIEW_ERROR,
     ADD_WATCHLIST,
     ADD_WATCHLIST_ERROR, DELETE_RATING,
     GET_CAST,
     GET_CAST_ERROR,
     GET_MOVIE_DETAILS,
-    GET_MOVIE_DETAILS_ERROR,
+    GET_MOVIE_DETAILS_ERROR, GET_MOVIE_REVIEWS, GET_MOVIE_REVIEWS_ERROR,
     GET_RATINGS,
     GET_RATINGS_ERROR,
     GET_TRAILER,
@@ -30,6 +30,7 @@ const initialState = {
         userRatingLoading: true,
         ratingAction: null,
     },
+    reviews: [],
     movieLoading: true
 };
 
@@ -146,6 +147,23 @@ export default function(state = initialState, action) {
                     userRating: 0,
                     ratingAction: "add"
                 }
+            };
+        case ADD_REVIEW:
+            return {
+                ...state,
+                reviews: [payload, ...state.reviews]
+            };
+        case ADD_REVIEW_ERROR:
+            return state;
+        case GET_MOVIE_REVIEWS:
+            return {
+                ...state,
+                reviews: payload
+            };
+        case GET_MOVIE_REVIEWS_ERROR:
+            return {
+              ...state,
+              reviews: []
             };
         default:
             return state;

@@ -264,7 +264,7 @@ public class MovieDAO extends DAO {
     }
 
     // Add review for movie
-    public void addReview(User user, Movie movie, String review) throws MovieException  {
+    public Reviews addReview(User user, Movie movie, String review) throws MovieException  {
         try {
             begin();
             User u = getUserFromId(user.getUserId());
@@ -277,6 +277,7 @@ public class MovieDAO extends DAO {
             getSession().save(r);
             commit();
             close();
+            return r;
         } catch(UserException e) {
             rollback();
             throw new MovieException(e.getMessage());
@@ -325,34 +326,34 @@ public class MovieDAO extends DAO {
     }
     
     // Get Reviews for movie
-    public List<Map<String, Object>> getReviewsForMovie(String movieId) throws MovieException {
+    public List<Reviews> getReviewsForMovie(String movieId) throws MovieException {
         try {
             begin();
             String hql = "FROM Reviews WHERE movie.movieId=:movieId ORDER BY reviewDate DESC";
             Query query = getSession().createQuery(hql);
             query.setParameter("movieId", Integer.parseInt(movieId));
             
-            List<Map<String, Object>> list = new ArrayList<>();
+//            List<Map<String, Object>> list = new ArrayList<>();
             List<Reviews> reviews = query.list();
-            for(Reviews r: reviews) {
-               JSONObject json = new JSONObject();
-               json.put("reviewId", r.getReviewId());
-               json.put("review", r.getReview());
-               Format formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-               json.put("reviewDate", formatter.format(r.getReviewDate()));
-               json.put("movieId",r.getMovie().getMovieId());
-               JSONObject user = new JSONObject();
-               user.put("userId", r.getUser().getUserId());
-               user.put("userName", r.getUser().getUserName());
-               user.put("firstName", r.getUser().getFirstName());
-               user.put("lastName", r.getUser().getLastName());
-               json.put("user", user);
-               list.add(json.toMap());
-            }
+//            for(Reviews r: reviews) {
+//               JSONObject json = new JSONObject();
+//               json.put("reviewId", r.getReviewId());
+//               json.put("review", r.getReview());
+//               Format formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//               json.put("reviewDate", formatter.format(r.getReviewDate()));
+//               json.put("movieId",r.getMovie().getMovieId());
+//               JSONObject user = new JSONObject();
+//               user.put("userId", r.getUser().getUserId());
+//               user.put("userName", r.getUser().getUserName());
+//               user.put("firstName", r.getUser().getFirstName());
+//               user.put("lastName", r.getUser().getLastName());
+//               json.put("user", user);
+//               list.add(json.toMap());
+//            }
             
             commit();
             close();
-            return list;
+            return reviews;
         } catch(HibernateException e) {
             rollback();
             throw new MovieException(e.getMessage());
@@ -360,33 +361,32 @@ public class MovieDAO extends DAO {
     }
     
     // Get Reviews for Users
-    public List<Map<String, Object>> getReviewsForUser(String userId) throws MovieException {
+    public List<Reviews> getReviewsForUser(String userId) throws MovieException {
         try {
             begin();
             String hql = "FROM Reviews WHERE user.userId=:userId ORDER BY reviewDate DESC";
             Query query = getSession().createQuery(hql);
             query.setParameter("userId", Integer.parseInt(userId));
             
-            List<Map<String, Object>> list = new ArrayList<>();
+//            List<Map<String, Object>> list = new ArrayList<>();
             List<Reviews> reviews = query.list();
-            for(Reviews r: reviews) {
-               JSONObject json = new JSONObject();
-               json.put("reviewId", r.getReviewId());
-               json.put("review", r.getReview());
-               Format formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-               json.put("reviewDate", formatter.format(r.getReviewDate()));
-               json.put("userId", r.getUser().getUserId());
-               JSONObject movie = new JSONObject();
-               movie.put("movieId", r.getMovie().getMovieId());
-               movie.put("movieName", r.getMovie().getMovieName());
-               movie.put("movieImage", r.getMovie().getMovieImage());
-               json.put("movie", movie);
-               list.add(json.toMap());
-            }
-            
+//            for(Reviews r: reviews) {
+//               JSONObject json = new JSONObject();
+//               json.put("reviewId", r.getReviewId());
+//               json.put("review", r.getReview());
+//               Format formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//               json.put("reviewDate", formatter.format(r.getReviewDate()));
+//               json.put("userId", r.getUser().getUserId());
+//               JSONObject movie = new JSONObject();
+//               movie.put("movieId", r.getMovie().getMovieId());
+//               movie.put("movieName", r.getMovie().getMovieName());
+//               movie.put("movieImage", r.getMovie().getMovieImage());
+//               json.put("movie", movie);
+//               list.add(json.toMap());
+//            }
             commit();
             close();
-            return list;
+            return reviews;
         } catch(HibernateException e) {
             rollback();
             throw new MovieException(e.getMessage());

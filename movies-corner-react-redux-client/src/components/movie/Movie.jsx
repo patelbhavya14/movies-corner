@@ -9,6 +9,7 @@ import Trailer from "./Trailer";
 import MovieCast from "./MovieCast";
 import WatchListButton from "./WatchListButton";
 import Ratings from "./Ratings";
+import MovieReviews from "./MovieReviews";
 
 const Movie = ({movieId, movie: {movie, movieLoading}, getMovieDetails}) => {
     useEffect(() => {
@@ -23,8 +24,9 @@ const Movie = ({movieId, movie: {movie, movieLoading}, getMovieDetails}) => {
                 <div style={
                     {
                         backgroundImage: "linear-gradient(rgba(0, 0, 0, 0.60), rgba(0, 0, 0, 0.60)),url("+ImagePath+movie.backdrop_path+")",
-                        backgroundSize: "100% 100%",
-                        boxShadow: "inset 0 0 0 1000px rgba(0,0,0,.2)"
+                        backgroundSize: "100%",
+                        boxShadow: "inset 0 0 0 1000px rgba(0,0,0,.2)",
+                        backgroundRepeat: "repeat-y"
                     }
                 }>
                     <div className="container pt-5 pb-5 min-vh-100">
@@ -57,6 +59,14 @@ const Movie = ({movieId, movie: {movie, movieLoading}, getMovieDetails}) => {
                         </div>
                         <div className="row text-center">
                             <MovieCast movieId={movieId}/>
+                        </div>
+                        <div className="row mt-3 text-light">
+                            <h1 className="ml-3" style={{
+                                "fontSize": "200%"
+                            }}>Reviews</h1>
+                        </div>
+                        <div className="row">
+                            <MovieReviews movieId={movieId}/>
                         </div>
                     </div>
                 </div>

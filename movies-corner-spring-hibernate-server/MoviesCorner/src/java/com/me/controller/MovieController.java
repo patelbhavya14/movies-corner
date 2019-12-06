@@ -9,6 +9,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.me.dao.MovieDAO;
 import com.me.exception.MovieException;
 import com.me.pojo.Movie;
+import com.me.pojo.Reviews;
 import com.me.pojo.User;
 import com.me.pojo.UserRole;
 import com.me.response.Errors;
@@ -235,9 +236,9 @@ public class MovieController {
             m.setMovieId(json.getInt("movieId"));
             m.setMovieName(json.getString("movieName"));
             m.setMovieImage(json.getString("movieImage"));
-            movieDao.addReview(user, m, json.getString("review"));
+            Reviews r =movieDao.addReview(user, m, json.getString("review"));
 
-            return new ResponseEntity<>(new Message("Review added"), HttpStatus.OK);
+            return new ResponseEntity<>(r, HttpStatus.OK);
         } catch (MovieException e) {
             List<Message> errors = new ArrayList<>();
             errors.add(new Message(e.getMessage()));
@@ -300,7 +301,7 @@ public class MovieController {
     public ResponseEntity<Object> getReviewsForMovie(@PathVariable String movieId, HttpServletRequest request) {
         try {
 
-            List<Map<String, Object>> list = movieDao.getReviewsForMovie(movieId);
+            List<Reviews> list = movieDao.getReviewsForMovie(movieId);
 
             return new ResponseEntity<>(list, HttpStatus.OK);
         } catch (MovieException e) {
@@ -317,7 +318,7 @@ public class MovieController {
     public ResponseEntity<Object> getReviewsForUser(@PathVariable String userId, HttpServletRequest request) {
         try {
 
-            List<Map<String, Object>> list = movieDao.getReviewsForUser(userId);
+            List<Reviews> list = movieDao.getReviewsForUser(userId);
 
             return new ResponseEntity<>(list, HttpStatus.OK);
         } catch (MovieException e) {

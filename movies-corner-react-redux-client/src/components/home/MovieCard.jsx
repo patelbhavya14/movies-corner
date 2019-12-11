@@ -4,7 +4,7 @@ import {ImagePath} from "../../config/config";
 import {Link} from "react-router-dom";
 import Moment from "react-moment";
 
-const MovieCard = ({movie, type, action}) => {
+const MovieCard = ({movie, type, action, onEdit}) => {
     useEffect(() => {
         if(type === 'search')
             setImage(`${ImagePath}`+`${movie.backdrop_path}`);
@@ -18,18 +18,30 @@ const MovieCard = ({movie, type, action}) => {
 
     return (
         <div className="card card-horizontal ml-5 mr-5 rounded mb-1 m-2">
-
             <div className="card-row text-decoration-none">
-
                 <div className="col-md-3 p-0">
-                    <Link to={type === 'search'? `/movie/${movie.id}`:`/movie/${movie.movieId}`}>
-                        <img
-                            alt="thumbnail"
-                            className="card-item-first img-fluid"
-                            src={image}
-                        />
-                    </Link>
+                    {
+                        type !== 'reviews' && (<Link to={type === 'search'? `/movie/${movie.id}`:`/movie/${movie.movieId}`}>
+                            <img
+                                alt="thumbnail"
+                                className="card-item-first img-fluid"
+                                src={image}
+                            />
+                        </Link>)
+                    }
+
+                    {
+                        type === 'reviews' && (<Link to={`/movie/${movie.movie.movieId}`}>
+                            <img
+                                alt="thumbnail"
+                                className="card-item-first img-fluid"
+                                src={image}
+                            />
+                        </Link>)
+                    }
                 </div>
+
+
 
                 <div className="col-md-9 align-self-center">
                     <section className="align-self-center text-decoration-none">

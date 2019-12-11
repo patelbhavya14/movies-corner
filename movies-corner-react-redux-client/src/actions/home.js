@@ -12,10 +12,11 @@ export const getPopularMovies = (page) => async dispatch => {
     try {
         const res = await axios.get("https://api.themoviedb.org/3/movie/popular?api_key="+APIKey+"&page="+page);
 
-        const popularMovies = res.data.results.filter((m, index) => index<12);
+        const popularMovies = res.data.results.filter((m, index) => index<6);
 
         const result = popularMovies.map(
-            ({id, title, backdrop_path, release_date}) => ({id, title, backdrop_path, release_date})
+            ({id, title, backdrop_path, poster_path, release_date}) =>
+                ({id, title, backdrop_path, poster_path, release_date})
         );
 
         dispatch({
@@ -34,7 +35,7 @@ export const getNowPlayingMovies = (page) => async dispatch => {
     try {
         const res = await axios.get("https://api.themoviedb.org/3/movie/now_playing?api_key="+APIKey+"&page="+page);
 
-        const nowPlayingMovies = res.data.results.filter((m, index) => index<12);
+        const nowPlayingMovies = res.data.results.filter((m, index) => index<6);
 
         const result = nowPlayingMovies.map(
             ({id, title, backdrop_path, release_date}) => ({id, title, backdrop_path, release_date})

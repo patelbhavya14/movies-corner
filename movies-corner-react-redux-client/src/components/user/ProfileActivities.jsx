@@ -18,13 +18,19 @@ const ProfileActivities = ({userId, tab, profile: {loadingUser, user}}) => {
                         <ul className="nav nav-justified">
                             <li className="nav-item h3">
                                 <span className={`${currentTab === 'watchList' ? 'active' : ''} text-light link`}
-                                      onClick={(e)=>setCurrentTab('watchList')}>
+                                      onClick={(e)=> {
+                                          setCurrentTab('watchList');
+                                          // onChange("");
+                                      }}>
                                     WatchList
                                 </span>
                             </li>
                             <li className="nav-item h3">
                                 <span className={`${currentTab === 'ratings' ? 'active' : ''} text-light link`}
-                                      onClick={(e)=>setCurrentTab('ratings')}>
+                                      onClick={(e)=> {
+                                          setCurrentTab('ratings');
+                                          // onChange("/ratings");
+                                      }}>
                                     Ratings
                                 </span>
                             </li>
@@ -32,20 +38,29 @@ const ProfileActivities = ({userId, tab, profile: {loadingUser, user}}) => {
                                 user.userRole === 'Critic' && (
                                 <li className="nav-item h3">
                                     <span className={`${currentTab === 'reviews' ? 'active' : ''} text-light link`}
-                                          onClick={(e)=>setCurrentTab('reviews')}>Reviews
+                                          onClick={(e)=>{
+                                              setCurrentTab('reviews');
+                                              // onChange("/reviews");
+                                          }}>Reviews
                                     </span>
                                 </li>)
                             }
 
                             <li className="nav-item h3">
                                 <span className={`${currentTab === 'followings' ? 'active' : ''} text-light link`}
-                                      onClick={(e)=>setCurrentTab('followings')}>
+                                      onClick={(e)=>{
+                                          setCurrentTab('followings');
+                                          // onChange("/followings");
+                                      }}>
                                     Followings
                                 </span>
                             </li>
                             <li className="nav-item h3">
                                 <span className={`${currentTab === 'followers' ? 'active' : ''} text-light link`}
-                                      onClick={(e)=>setCurrentTab('followers')}>
+                                      onClick={(e)=>{
+                                          setCurrentTab('followers');
+                                          // onChange("/followers");
+                                      }}>
                                     Followers
                                 </span>
                             </li>

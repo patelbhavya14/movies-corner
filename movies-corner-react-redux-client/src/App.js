@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import './App.css';
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch, Redirect } from "react-router-dom";
 
 import store from './store';
 import {loadUser} from "./actions/auth";
@@ -14,6 +14,11 @@ import HomePage from "./components/layout/HomePage";
 import SearchUsers from "./components/search/SearchUsers";
 import SearchMovies from "./components/search/SearchMovies";
 import Movie from "./components/movie/Movie";
+import {syncHistoryWithStore} from "react-router-redux";
+// import { syncHistoryWithStore } from 'react-router-redux';
+import { createBrowserHistory } from 'history';
+import NotFound from "./components/layout/NotFound";
+import IntroductionPage from "./components/layout/IntroductionPage";
 
 if(localStorage.token) {
   setAuthToken();
@@ -24,14 +29,18 @@ function App() {
     store.dispatch(loadUser());
   }, []);
 
-  // const history = syncHistoryWithStore(useHistory, store);
+  const history = syncHistoryWithStore(
+      createBrowserHistory(),
+      store
+  );
 
   return (
     <Provider store={store}>
       <div className="background-image min-vh-100 text-light">
-        <Router>
+        <Router history={history}>
           <Navigationbar />
-          {/*<Switch>*/}
+          <Switch>
+            <Route exact path='/' component={IntroductionPage}/>
             <Route exact path='/home' component={HomePage}/>
             <Route exact path='/register' component={Register}/>
             <Route exact path='/login' component={Login}/>
@@ -50,7 +59,9 @@ function App() {
             <Route exact path='/movie/:movieId'
                    component={(e) => <Movie movieId={e.match.params.movieId} />}
             />
-          {/*</Switch>*/}
+            <Route path='' component={NotFound}/>
+            {/*<Redirect to='/404'/>*/}
+          </Switch>
         </Router>
       </div>
     </Provider>

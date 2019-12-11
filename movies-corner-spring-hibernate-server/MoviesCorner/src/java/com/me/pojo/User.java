@@ -8,9 +8,7 @@ package com.me.pojo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 import javax.persistence.CascadeType;
@@ -81,7 +79,6 @@ public class User implements Serializable {
     private Set<Reviews> reviews = new HashSet<>();
 
     public User() {
-
     }
 
     public User(String userName, String password, String firstName, String lastName) {
@@ -207,10 +204,5 @@ public class User implements Serializable {
         }
         User other = (User) obj;
         return Objects.equals(userName, other.getUserName());
-    }
-
-    @Override
-    public String toString() {
-        return userName + " " + firstName + " " + lastName;
     }
 }

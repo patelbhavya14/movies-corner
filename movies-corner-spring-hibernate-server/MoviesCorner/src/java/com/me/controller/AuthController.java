@@ -40,12 +40,12 @@ public class AuthController {
     @Qualifier("jwtTokenUtil")
     private JwtTokenUtil jwtTokenUtil;
 
+    // User Login and return token
+    // access: private 
     @RequestMapping(value = "/authenticate", method = RequestMethod.POST, consumes="application/json")
     public ResponseEntity<Object> createAuthenticationToken(@RequestBody User u) throws Exception {
         try {
-            System.out.println("HERE");
-            User user = authDao.authenticate(u.getUserName(),
-                    u.getPassword());
+            User user = authDao.authenticate(u.getUserName(), u.getPassword());
             final String token = jwtTokenUtil.generateToken(user);
             return new ResponseEntity<>(new JwtResponse(token), HttpStatus.OK);
         } catch (UserException e) {
@@ -55,6 +55,8 @@ public class AuthController {
         }
     }
 
+    // Getting user details from token
+    // access: private
     @RequestMapping(value = "/getUserDetails", method = RequestMethod.GET)
     public ResponseEntity<Object> getUserDetails(HttpServletRequest request) throws Exception {
         try {

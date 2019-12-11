@@ -5,7 +5,7 @@ import profile from "./profile";
 import search from "./search";
 import home from "./home";
 import movie from "./movie";
-import { syncHistoryWithStore, routerReducer } from 'react-router-redux'
+import { routerReducer } from 'react-router-redux'
 
 export default combineReducers({
     auth,

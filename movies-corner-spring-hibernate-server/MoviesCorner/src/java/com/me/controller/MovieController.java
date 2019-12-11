@@ -5,7 +5,6 @@
  */
 package com.me.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.me.dao.MovieDAO;
 import com.me.exception.MovieException;
 import com.me.pojo.Movie;
@@ -16,7 +15,6 @@ import com.me.response.Errors;
 import com.me.response.Message;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import org.json.JSONObject;
@@ -28,7 +26,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**

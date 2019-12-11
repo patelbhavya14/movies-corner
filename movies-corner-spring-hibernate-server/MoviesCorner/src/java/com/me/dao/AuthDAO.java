@@ -9,12 +9,8 @@ import static com.me.dao.DAO.getSession;
 import com.me.exception.UserException;
 import com.me.pojo.User;
 import java.util.List;
-import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
-import org.hibernate.criterion.MatchMode;
-import org.hibernate.criterion.Projections;
-import org.hibernate.criterion.Restrictions;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 /**
@@ -22,11 +18,13 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
  * @author bhaVYa
  */
 public class AuthDAO extends DAO{
+    
+    // User authentication
     public User authenticate(String userName, String password) throws UserException {
         try {
             begin();
             
-            Query q = getSession().createQuery("from User where userName=:userName");
+            Query q = getSession().createQuery("FROM User WHERE userName=:userName");
             q.setString("userName", userName);
             
             List<User> list = q.list();
@@ -38,13 +36,15 @@ public class AuthDAO extends DAO{
             if(!bcrypt.matches(password, user.getPassword()))
                 throw new HibernateException("Username or Password is invalid");
             commit();
-            return list.get(0);
+            close();
+            return user;
         } catch (HibernateException e) {
             rollback();
             throw new UserException(e.getMessage());
         }
     }
     
+    // Getting user details from userId
     public User getUser(String userId) throws UserException{
         try {
             begin();

@@ -43,7 +43,7 @@ const AddReview = ({auth, movie:{id, title, backdrop_path}, addReview}) => {
                                     </div>
                                 </div>
                             ):
-                            <p>ab</p>
+                            <p>You need to be a certified Critic</p>
                     }
 
                 </Fragment>

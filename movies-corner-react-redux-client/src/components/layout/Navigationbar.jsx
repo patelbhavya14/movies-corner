@@ -1,10 +1,9 @@
 import React, { Fragment } from "react";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import logo from "../../images/logo.png";
 import {loadUser, logout} from "../../actions/auth";
-
 const fontColor = {
   color: "white"
 };
@@ -25,7 +24,8 @@ const Navigationbar = ({ auth: { isAuthenticated, loading, user }, loadUser, log
                   <p className="p-0 m-0 text-center"><i className="fas fa-user"/></p> &nbsp;
                   <p className="mb-0 text-center" >{isAuthenticated && user && user.userName}</p>
                 </Link>
-                <a className="navbar-nav text-decoration-none pr-3" style={fontColor} href="#!" onClick={logout}>
+                <a className="navbar-nav text-decoration-none pr-3" style={fontColor} href="/home"
+                   onClick={logout}>
                   <p className="p-0 m-0 text-center"><i className="fas fa-sign-out-alt"/></p>&nbsp;
                   <p className="mb-0 text-center" >Logout</p>
                 </a>

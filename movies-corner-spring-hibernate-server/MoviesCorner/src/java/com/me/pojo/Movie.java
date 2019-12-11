@@ -7,9 +7,7 @@ package com.me.pojo;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 import javax.persistence.CascadeType;
@@ -125,10 +123,5 @@ public class Movie implements Serializable {
         }
         Movie other = (Movie) obj;
         return Objects.equals(movieId, other.getMovieId());
-    }
-
-    @Override
-    public String toString() {
-        return this.movieId + "" + this.movieName;
     }
 }

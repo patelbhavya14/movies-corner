@@ -44,7 +44,7 @@ const RatingsButton = ({movie: {ratings, movie:{id, title, backdrop_path}},
 };
 
 RatingsButton.propTypes = {
-    movieId: PropTypes.string.isRequired,
+    movieId: PropTypes.number.isRequired,
     getUserRatingForMovie: PropTypes.func.isRequired,
     addRating: PropTypes.func.isRequired,
     updateRating: PropTypes.func.isRequired,

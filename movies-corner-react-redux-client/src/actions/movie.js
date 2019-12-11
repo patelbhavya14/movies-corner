@@ -102,7 +102,7 @@ export const addToWatchList = (id, name, image) => async dispatch => {
             movieName: name,
             movieImage: image
         };
-        const res = await axios.post(`http://localhost:8080/MoviesCorner/api/movies/watchlist/add`, body, setAuthToken());
+        await axios.post(`http://localhost:8080/MoviesCorner/api/movies/watchlist/add`, body, setAuthToken());
 
         dispatch({
             type: ADD_WATCHLIST
@@ -122,7 +122,7 @@ export const removeFromWatchList = (id, name, image) => async dispatch => {
             movieName: name,
             movieImage: image
         };
-        const res = await axios.post(`http://localhost:8080/MoviesCorner/api/movies/watchlist/remove`, body, setAuthToken());
+        await axios.post(`http://localhost:8080/MoviesCorner/api/movies/watchlist/remove`, body, setAuthToken());
 
         dispatch({
             type: REMOVE_WATCHLIST
@@ -175,7 +175,7 @@ export const addRating = (id, name, image, rating) => async dispatch => {
             movieName: name,
             movieImage: image
         };
-        const res = await axios.post(`http://localhost:8080/MoviesCorner/api/movies/ratings/add/${rating}`, body, setAuthToken());
+        await axios.post(`http://localhost:8080/MoviesCorner/api/movies/ratings/add/${rating}`, body, setAuthToken());
         dispatch({
             type: ADD_RATING,
             payload: rating
@@ -195,7 +195,7 @@ export const updateRating = (id, name, image, rating) => async dispatch => {
             movieName: name,
             movieImage: image
         };
-        const res = await axios.post(`http://localhost:8080/MoviesCorner/api/movies/ratings/update/${rating}`, body, setAuthToken());
+        await axios.post(`http://localhost:8080/MoviesCorner/api/movies/ratings/update/${rating}`, body, setAuthToken());
         dispatch({
             type: UPDATE_RATING,
             payload: rating
@@ -215,7 +215,7 @@ export const deleteRating = (id, name, image) => async dispatch => {
             movieName: name,
             movieImage: image
         };
-        const res = await axios.post(`http://localhost:8080/MoviesCorner/api/movies/ratings/delete`, body, setAuthToken());
+        await axios.post(`http://localhost:8080/MoviesCorner/api/movies/ratings/delete`, body, setAuthToken());
         dispatch({
             type: DELETE_RATING
         });

@@ -8,7 +8,6 @@ package com.me.controller;
 import com.me.config.JwtTokenUtil;
 import com.me.dao.UserDAO;
 import com.me.exception.UserException;
-import com.me.pojo.Movie;
 import com.me.pojo.User;
 import com.me.response.Errors;
 import com.me.response.JwtResponse;
@@ -60,10 +59,12 @@ public class UserController {
         binder.setValidator(validator);
     }
 
+    // User registeration
     @RequestMapping(value = "/auth/register",
             method = RequestMethod.POST,
             produces = "application/json")
     public ResponseEntity<Object> register(@RequestBody User user, BindingResult result) throws Exception {
+        // Validting fields in form
         validator.validate(user, result);
         if (result.hasErrors()) {
             List<Message> errors = new ArrayList<>();
@@ -73,6 +74,8 @@ public class UserController {
         }
         try {
             User u = userDao.register(user);
+            
+            // Generating token from User object
             final String token = jwtTokenUtil.generateToken(u);
             return new ResponseEntity<>(new JwtResponse(token), HttpStatus.OK);
         } catch (UserException e) {
@@ -82,6 +85,7 @@ public class UserController {
         }
     }
 
+    // Get user details along with following details in term of requesting user
     @RequestMapping(value = "/users/{userId}",
             method = RequestMethod.GET,
             produces = "application/json")
@@ -122,16 +126,25 @@ public class UserController {
 
     }
 
+    // Search Users
     @RequestMapping(value = "/users/search/{userName}",
             method = RequestMethod.GET,
             produces = "application/json")
     public ResponseEntity<Object> searchUsers(@PathVariable String userName) throws Exception {
-        List<User> users = userDao.search(userName);
-        return new ResponseEntity<>(users, HttpStatus.OK);
+        try {
+            List<User> users = userDao.search(userName);
+            return new ResponseEntity<>(users, HttpStatus.OK);
+        } catch(UserException e) {
+            List<Message> errors = new ArrayList<>();
+            errors.add(new Message(e.getMessage()));
+            return new ResponseEntity<>(new Errors(errors), HttpStatus.BAD_REQUEST);
+        }
     }
 
+    // Follow users
+    // Access: private
     @RequestMapping(value = "/users/follow/{followingId}",
-            method = RequestMethod.GET,
+            method = RequestMethod.POST,
             produces = "application/json")
     public ResponseEntity<Object> follow(@PathVariable String followingId, HttpServletRequest request) throws Exception {
         try {
@@ -139,30 +152,34 @@ public class UserController {
             userDao.follow(user, followingId);
 
             return new ResponseEntity<>(new Message("Followed Successfully"), HttpStatus.OK);
-        } catch (Exception e) {
+        } catch (UserException e) {
             List<Message> errors = new ArrayList<>();
             errors.add(new Message(e.getMessage()));
             return new ResponseEntity<>(new Errors(errors), HttpStatus.BAD_REQUEST);
         }
     }
 
+    // Unfollow users
+    // Access: private
     @RequestMapping(value = "/users/unfollow/{unfollowingId}",
-            method = RequestMethod.GET,
+            method = RequestMethod.POST,
             produces = "application/json")
     public ResponseEntity<Object> unfollow(@PathVariable String unfollowingId, HttpServletRequest request) throws Exception {
         try {
             User user = (User) request.getAttribute("user");
-
+            
             userDao.unfollow(user, unfollowingId);
-
+            
             return new ResponseEntity<>(new Message("Unfollowed Successfully"), HttpStatus.OK);
-        } catch (Exception e) {
+        } catch (UserException e) {
+            System.out.println("UNFOLLOW1"+e.getMessage());
             List<Message> errors = new ArrayList<>();
             errors.add(new Message(e.getMessage()));
             return new ResponseEntity<>(new Errors(errors), HttpStatus.BAD_REQUEST);
         }
     }
 
+    // Get followings list
     @RequestMapping(value = "/users/followings/{id}",
             method = RequestMethod.GET,
             produces = "application/json")
@@ -213,6 +230,7 @@ public class UserController {
         }
     }
 
+    // Get followers list
     @RequestMapping(value = "/users/followers/{id}",
             method = RequestMethod.GET,
             produces = "application/json")

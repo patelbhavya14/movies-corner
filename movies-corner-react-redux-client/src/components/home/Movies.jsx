@@ -14,21 +14,21 @@ const Movies = ({type, movie, getPopularMovies, getNowPlayingMovies}) => {
 
     return (
         <div className="container">
-            {
-                type === 'Popular Movies' && movie && !movie.loadingpopularMovies && (
-                    <Fragment>
-                        <h1>{type}</h1>
-                        <div className="row">
-                            {
-                                movie.popularMovies.map((m, index) =>
-                                    (<MoviePosterCard movie={m} key={index}/>)
-                                )
-                            }
-                        </div>
-                    </Fragment>
+            {/*{*/}
+            {/*    type === 'Popular Movies' && movie && !movie.loadingpopularMovies && (*/}
+            {/*        <Fragment>*/}
+            {/*            <h1>{type}</h1>*/}
+            {/*            <div className="row">*/}
+            {/*                {*/}
+            {/*                    movie.popularMovies.map((m, index) =>*/}
+            {/*                        (<MoviePosterCard movie={m} key={index}/>)*/}
+            {/*                    )*/}
+            {/*                }*/}
+            {/*            </div>*/}
+            {/*        </Fragment>*/}
 
-                )
-            }
+            {/*    )*/}
+            {/*}*/}
 
             {
                 type === 'Now Playing Movies' && movie && !movie.loadingnowplayingMovies && (

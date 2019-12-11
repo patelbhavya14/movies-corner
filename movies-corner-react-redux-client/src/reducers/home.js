@@ -1,10 +1,11 @@
 import {GET_NOW_PLAYING_MOVIES_SUCCESS, GET_POPULAR_MOVIES_SUCCESS} from "../actions/types";
+import { LOCATION_CHANGE } from 'react-router-redux';
 
 const initialState = {
     popularMovies: [],
     nowplayingMovies: [],
     loadingpopularMovies: true,
-    loadingnowplayingMovies: true,
+    loadingnowplayingMovies: true
 };
 
 export default function(state = initialState, action) {

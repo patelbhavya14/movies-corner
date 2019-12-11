@@ -61,6 +61,7 @@ public class UserDAO extends DAO {
         }
     }
 
+    // Register user
     public User register(User user) throws UserException {
         try {
             begin();
@@ -81,6 +82,7 @@ public class UserDAO extends DAO {
         }
     }
 
+    // Search Users
     public List<User> search(String userName) throws UserException {
         try {
             begin();
@@ -105,6 +107,7 @@ public class UserDAO extends DAO {
         }
     }
 
+    // Follow user
     public void follow(User user, String followingId) throws UserException {
         try {
             begin();
@@ -122,15 +125,16 @@ public class UserDAO extends DAO {
         }
     }
 
+    // Unfollow user
     public void unfollow(User user, String unfollowingId) throws UserException {
         try {
             begin();
-
             User unfollowingUser = getUserFromId(unfollowingId);
             User u = getUserFromId(String.valueOf(user.getUserId()));
             if (unfollowingUser.equals(u)) {
                 throw new HibernateException("Same User");
             }
+            
             u.removeFollowing(unfollowingUser);
             commit();
             close();
@@ -140,6 +144,7 @@ public class UserDAO extends DAO {
         }
     }
 
+    // Get followings list
     public Set<User> getFollowings(String userId) throws UserException {
         try {
             begin();
@@ -154,6 +159,7 @@ public class UserDAO extends DAO {
         }
     }
 
+    // Get followers list
     public Set<User> getFollowers(String userId) throws UserException {
         try {
             begin();

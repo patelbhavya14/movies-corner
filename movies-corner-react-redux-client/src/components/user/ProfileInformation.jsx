@@ -9,7 +9,7 @@ import Avatar from "react-avatar";
 
 const ProfileInformation = ({userId, profile:{user, loadingUser}, getProfileInformation, auth}) => {
     useEffect(() => {
-        console.log("information fetched");
+        console.log("INFORMATION FETCHING");
         getProfileInformation(userId);
     },[userId]);
 

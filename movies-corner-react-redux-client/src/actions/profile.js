@@ -71,7 +71,7 @@ export const getFollowers = (userId) => async dispatch => {
 // Follow user
 export const follow = (userId) => async dispatch => {
     try {
-        const res = await axios.get(`http://localhost:8080/MoviesCorner/api/users/follow/${userId}`, setAuthToken());
+        const res = await axios.post(`http://localhost:8080/MoviesCorner/api/users/follow/${userId}`,null, setAuthToken());
 
         dispatch({
            type: USER_FOLLOW_SUCCESS
@@ -86,7 +86,7 @@ export const follow = (userId) => async dispatch => {
 // Follow user
 export const unfollow = (userId) => async dispatch => {
     try {
-        const res = await axios.get(`http://localhost:8080/MoviesCorner/api/users/unfollow/${userId}`, setAuthToken());
+        const res = await axios.post(`http://localhost:8080/MoviesCorner/api/users/unfollow/${userId}`,null, setAuthToken());
 
         dispatch({
             type: USER_UNFOLLOW_SUCCESS

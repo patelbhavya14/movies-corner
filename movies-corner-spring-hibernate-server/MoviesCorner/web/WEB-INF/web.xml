@@ -43,7 +43,14 @@
         <url-pattern>/api/movies/reviews/update</url-pattern>
         <url-pattern>/api/movies/reviews/delete</url-pattern>
     </filter-mapping>
-    
+    <error-page>
+        <error-code>404</error-code>
+        <location>/api/error/404</location>
+    </error-page>
+    <error-page>
+        <error-code>405</error-code>
+        <location>/api/error/405</location>
+    </error-page>
     <session-config>
         <session-timeout>
             30

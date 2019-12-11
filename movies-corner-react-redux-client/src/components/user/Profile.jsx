@@ -1,10 +1,16 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import ProfileInformation from "./ProfileInformation";
 import ProfileActivities from "./ProfileActivities";
 import {connect} from "react-redux";
+import {withRouter} from "react-router-dom";
 
-const Profile = ({userId, tab, auth, profile}) => {
+const Profile = ({userId, tab, auth, history}) => {
+
+    const pushHistory = (tab) => {
+      history.push(`/profile/${userId}${tab}`);
+    };
+
     return (
         <div className="container">
             {
@@ -14,12 +20,11 @@ const Profile = ({userId, tab, auth, profile}) => {
                             <ProfileInformation userId={userId}/>
                         </div>
                         <div className="col-md-10">
-                            <ProfileActivities userId={userId} tab={tab}/>
+                            <ProfileActivities userId={userId} tab={tab} />
                         </div>
                     </div>
                 )
             }
-
         </div>
     );
 };
@@ -34,4 +39,4 @@ const mapStateToProps = state => ({
     profile: state.profile
 });
 
-export default connect(mapStateToProps)(Profile);
+export default withRouter(connect(mapStateToProps)(Profile));

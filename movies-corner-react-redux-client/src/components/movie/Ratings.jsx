@@ -13,7 +13,7 @@ const Ratings = ({movieId}) => {
 };
 
 Ratings.propTypes = {
-    movieId: PropTypes.string.isRequired
+    movieId: PropTypes.number.isRequired
 };
 
 export default Ratings;

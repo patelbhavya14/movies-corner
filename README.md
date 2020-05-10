@@ -27,7 +27,7 @@ Open movie community buff where Users can,
 ## Build Instruction
 Clone the repository into a local machine
 - Import [movies-corner-spring-hibernate-server](https://github.com/patelbhavya14/movies-corner/tree/master/movies-corner-spring-hibernate-server "MoviesCorner Server") folder in Eclipse JEE as a project, build it and run it. The server will run at http://localhost:8080/
-- From terminal go to folder [movies-corner-spring-hibernate-server](https://github.com/patelbhavya14/movies-corner/tree/master/movies-corner-react-redux-client "MoviesCorner Client") and run the following command to start the React client.
+- From terminal go to folder [movies-corner-react-redux-client](https://github.com/patelbhavya14/movies-corner/tree/master/movies-corner-react-redux-client "MoviesCorner Client") and run the following command to start the React client.
   - <code> npm install</code>  to install project dependency
   - <code> npm start</code>  to start the server
 - Web application will run at http://localhost:3000/
